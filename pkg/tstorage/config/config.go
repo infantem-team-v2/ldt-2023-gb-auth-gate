@@ -9,6 +9,7 @@ type TStorageConfig struct {
 			Password string `json:"password"`
 			DBName   string `json:"db_name"`
 			SSLMode  string `json:"ssl_mode"`
+			PgDriver string `json:"pg_driver"`
 		} `json:"Postgres"`
 	} `json:"Relational"`
 	Cache struct {
