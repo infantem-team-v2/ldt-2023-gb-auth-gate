@@ -33,7 +33,7 @@ func InitPsqlDB(cfg *config.TStorageConfig) (*sqlx.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	database.DB.SetConnMaxIdleTime(time.Duration(cfg.Relational.Postgres.ConnMaxIdleTime) * time.Second)
+	database.DB.SetConnMaxIdleTime(time.Duration(cfg.Relational.Postgres.ConnMaxIdleTime))
 	database.DB.SetMaxOpenConns(cfg.Relational.Postgres.MaxOpenConns)
 	return database, nil
 }
