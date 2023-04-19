@@ -32,9 +32,7 @@ func NewConfig() *Config {
 }
 
 func BuildConfig(ctn di.Container) (interface{}, error) {
-	cfg := NewConfig()
-
-	return cfg, nil
+	return NewConfig(), nil
 }
 
 //func (c *Config) ParseConfig() error {
@@ -44,7 +42,7 @@ func BuildConfig(ctn di.Container) (interface{}, error) {
 func loadConfig() (*viper.Viper, error) {
 	v := viper.New()
 
-	v.AddConfigPath("/home/dima/go/src/bank_api/config") //TEST
+	v.AddConfigPath("../config") //TEST
 	//v.AddConfigPath("config") //PROD
 	v.SetConfigName("config")
 	v.SetConfigType("yml")

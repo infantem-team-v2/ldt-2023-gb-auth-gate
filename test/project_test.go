@@ -1,10 +1,8 @@
 package test
 
 import (
-	"bank_api/config"
+	"bank_api/internal/pkg/dependency"
 	"bank_api/pkg/thttp"
-	"bank_api/pkg/tlogger"
-	"github.com/sarulabs/di"
 	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
@@ -13,57 +11,13 @@ import (
 //=======================HTTP=======================//
 
 func TestRequest(t *testing.T) {
-	builder, err := di.NewBuilder()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = builder.Add(di.Def{
-		Name:  "config",
-		Scope: di.App,
-		Build: func(ctn di.Container) (interface{}, error) {
-			return config.NewConfig(), nil
-		},
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = builder.Add(di.Def{
-		Name:  "logger",
-		Scope: di.App,
-		Build: func(ctn di.Container) (interface{}, error) {
-			return tlogger.NewLogger(), nil
-		},
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if err != nil {
-		t.Fatal(err)
-	}
-	err = builder.Add(di.Def{
-		Name:  "httpClientWrapper",
-		Scope: di.App,
-		Build: func(ctn di.Container) (interface{}, error) {
-			return thttp.ThttpClient{
-				Config: ctn.Get("config").(*config.Config),
-				Logger: ctn.Get("logger").(tlogger.Logger),
-			}, nil
-		},
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	container := builder.Build()
+	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 
 	expected := map[string]interface{}{
 		"key": "value",
 	}
 	dest := map[string]interface{}{}
-	hc := container.Get("httpClientWrapper").(thttp.ThttpClient)
+	hc := tdc.ContainerInstance().Get("httpClient").(*thttp.ThttpClient)
 
 	result, statusCode, err := hc.Request("GET", "https://api.worldchange.cc/api/currencies/get_from", nil, nil, &dest, nil)
 	if err != nil {

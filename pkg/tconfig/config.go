@@ -11,7 +11,7 @@ type BaseConfig struct {
 		Name string `json:"name"`
 	} `json:"Service"`
 	System struct {
-		MaxGoroutines uint64 `json:"max_goroutines"`
+		MaxGoroutines uint64 `json:"maxGoroutines"`
 		Host          string `json:"host"`
 		Port          string `json:"port"`
 	} `json:"System"`
