@@ -1,0 +1,13 @@
+host: bank.onecrypto.pro
+info:
+  contact:
+    email: bwg.it317@gmail.com
+    name: Docs developer
+    url: https://t.me/sirop_work
+  description: TimeStamp
+  title: CryptoBank API
+  version: 1.0.0
+paths: {}
+schemes:
+- https
+swagger: "2.0"

@@ -8,13 +8,14 @@ import (
 	"bank_api/pkg/tlogger"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	mwLogger "github.com/gofiber/fiber/v2/middleware/logger"
 	mwRecover "github.com/gofiber/fiber/v2/middleware/recover"
 	"time"
 )
 
 type Server struct {
 	Config     *config.Config     `di:"config"`
-	Logger     tlogger.Logger     `di:"logger"`
+	Logger     tlogger.ILogger    `di:"logger"`
 	HttpClient *thttp.ThttpClient `di:"httpClient"`
 	container  *dependency.TDependencyContainer
 	app        *fiber.App
@@ -45,10 +46,14 @@ func NewServer() *Server {
 
 // MapHandlers with middlewares and routers
 func (s *Server) MapHandlers() *Server {
+
+	sh := s.container.ContainerInstance().Get("stacktraceHandler").(*terrors.StacktraceHandler)
 	s.app.Use(mwRecover.New(mwRecover.Config{
-		EnableStackTrace: true,
-	}),
-	)
+		EnableStackTrace:  true,
+		StackTraceHandler: sh.Handle,
+	}))
+
+	s.app.Use(mwLogger.New(mwLogger.Config{}))
 
 	return s
 }

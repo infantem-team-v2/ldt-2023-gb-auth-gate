@@ -5,16 +5,20 @@ import (
 )
 
 type tError struct {
+	// internal fields for our purposes
 	internalError   error
 	internalMessage string
 	stackTrace      *xruntime.StackTrace
+
+	// external fields to send to client
+	statusCode      int
 	externalMessage *struct {
 		Description  string `json:"description"`
 		InternalCode uint16 `json:"internal_code"`
 	}
 }
 
-func Raise(err error) *tError {
+func Raise(err error) IError {
 
 	tErr := &tError{
 		internalError:   err,
@@ -23,6 +27,11 @@ func Raise(err error) *tError {
 	}
 
 	return tErr
+}
+
+func (e *tError) Wrap(err IError) IError {
+
+	return e
 }
 
 func setExternalMessage() {
