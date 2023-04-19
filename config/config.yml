@@ -9,7 +9,7 @@ BaseConfig:
     max_goroutines: 15000
 
 HttpConfig:
-  time_out: 1000
+  time_out: 10
   accept: "application/json"
   do_log_requests: 1
 

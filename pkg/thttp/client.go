@@ -33,7 +33,7 @@ func BuildHttpClient(ctn di.Container) (interface{}, error) {
 	}, nil
 }
 
-func (hc *ThttpClient) makeQueryString(
+func (hc *ThttpClient) MakeQueryString(
 	queryParams map[string]interface{},
 ) (query string) {
 	var queryCount int
@@ -57,11 +57,11 @@ func (hc *ThttpClient) Request(
 	reqHeaders map[string]string,
 	reqParams, destStruct interface{},
 	queryParams map[string]interface{},
-) (rawResponse map[string]interface{}, statusCode uint16, err error) {
+) (rawResponse interface{}, statusCode uint16, err error) {
 	req := http.AcquireRequest()
 	var queryString string
 	if queryParams != nil {
-		queryString = hc.makeQueryString(queryParams)
+		queryString = hc.MakeQueryString(queryParams)
 	}
 	req.SetRequestURI(fmt.Sprintf("%s%s", reqUrl, queryString))
 	req.Header.SetMethod(method)
@@ -75,8 +75,11 @@ func (hc *ThttpClient) Request(
 	}
 	req.SetBody(reqParamsData)
 	var resp http.Response
-
-	err = hc.httpClient.Do(req, &resp)
+	//----------------TEST---------------->//
+	httpClient := http.Client{Name: "bank-client", ReadTimeout: time.Duration(10) * time.Second, WriteTimeout: time.Duration(10) * time.Second}
+	err = httpClient.Do(req, &resp)
+	//<----------------TEST----------------//
+	//err = hc.httpClient.Do(req, &resp) //PROD
 	if err != nil {
 		return nil, 0, err
 	}
@@ -85,7 +88,7 @@ func (hc *ThttpClient) Request(
 		return nil, 0, err
 	}
 	hc.logRequest(req, &resp)
-	return nil, uint16(resp.StatusCode()), nil
+	return destStruct, uint16(resp.StatusCode()), nil
 }
 
 func (hc *ThttpClient) logRequest(req *http.Request, res *http.Response) {

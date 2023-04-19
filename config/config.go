@@ -37,15 +37,15 @@ func BuildConfig(ctn di.Container) (interface{}, error) {
 	return cfg, nil
 }
 
-func (c *Config) ParseConfig() error {
-	return nil
-}
+//func (c *Config) ParseConfig() error {
+//	return nil
+//}
 
 func loadConfig() (*viper.Viper, error) {
 	v := viper.New()
 
-	v.AddConfigPath("config")
-
+	v.AddConfigPath("/home/dima/go/src/bank_api/config") //TEST
+	//v.AddConfigPath("config") //PROD
 	v.SetConfigName("config")
 	v.SetConfigType("yml")
 	err := v.ReadInConfig()
@@ -62,6 +62,5 @@ func parseConfig(v *viper.Viper) (*Config, error) {
 		log.Fatalf("unable to decode config into struct, %v", err)
 		return nil, err
 	}
-
 	return &c, nil
 }
