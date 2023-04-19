@@ -7,11 +7,11 @@ type TStorageConfig struct {
 			Port            string `json:"port"`
 			User            string `json:"user"`
 			Password        string `json:"password"`
-			DBName          string `json:"db_name"`
-			SSLMode         string `json:"ssl_mode"`
-			PgDriver        string `json:"pg_driver"`
-			ConnMaxIdleTime int    `json:"conn_max_idle_time"`
-			MaxOpenConns    int    `json:"max_open_conns"`
+			DBName          string `json:"dbName"`
+			SSLMode         string `json:"sslMode"`
+			PgDriver        string `json:"pgDriver"`
+			ConnMaxIdleTime int    `json:"connMaxIdleTime"`
+			MaxOpenConns    int    `json:"maxOpenConns"`
 		} `json:"Postgres"`
 	} `json:"Relational"`
 	Cache struct {

@@ -1,4 +1,4 @@
-package tsecure
+package config
 
 type TSecureConfig struct {
 	Fernet struct {

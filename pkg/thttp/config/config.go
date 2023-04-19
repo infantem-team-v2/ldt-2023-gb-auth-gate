@@ -1,9 +1,9 @@
 package config
 
 type ThttpConfig struct {
-	TimeOut       uint32 `mapstructure:"time_out"`        // request timeout in seconds
-	Accept        string `mapstructure:"accept"`          // what types of content accepts
-	DoLogRequests uint8  `mapstructure:"do_log_requests"` // do logging of requests and responses
+	TimeOut       uint32 `json:"timeOut"`       // request timeout in seconds
+	Accept        string `json:"accept"`        // what types of content accepts
+	DoLogRequests uint8  `json:"doLogRequests"` // do logging of requests and responses
 }
 
 func (thc *ThttpConfig) ParseConfig() error {

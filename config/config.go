@@ -2,9 +2,9 @@ package config
 
 import (
 	"bank_api/pkg/tconfig"
-	config2 "bank_api/pkg/thttp/config"
-	"bank_api/pkg/tlogger/config"
-	"bank_api/pkg/tsecure"
+	thttpConfig "bank_api/pkg/thttp/config"
+	tloggerConfig "bank_api/pkg/tlogger/config"
+	tsecureConfig "bank_api/pkg/tsecure/config"
 	"fmt"
 	"github.com/sarulabs/di"
 	"github.com/spf13/viper"
@@ -13,9 +13,9 @@ import (
 
 type Config struct {
 	BaseConfig   tconfig.BaseConfig
-	HttpConfig   config2.ThttpConfig
-	LoggerConfig config.TLoggerConfig
-	SecureConfig tsecure.TSecureConfig
+	HttpConfig   thttpConfig.ThttpConfig
+	LoggerConfig tloggerConfig.TLoggerConfig
+	SecureConfig tsecureConfig.TSecureConfig
 }
 
 func NewConfig() *Config {
