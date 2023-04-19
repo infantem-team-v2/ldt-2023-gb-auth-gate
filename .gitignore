@@ -1,0 +1,5 @@
+config.config.yml
+test.config.config.yml
+.idea
+.env
+.nvimlog
