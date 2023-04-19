@@ -4,10 +4,7 @@ import (
 	"bank_api/config"
 	"bank_api/pkg/thttp"
 	"bank_api/pkg/tlogger"
-	"bytes"
-	"encoding/json"
 	"github.com/sarulabs/di"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -21,23 +18,23 @@ type ThttpClient struct {
 	responseRecorder *httptest.ResponseRecorder
 }
 
-type mockTransport struct {
-	rt http.RoundTripper
-	fn func(*http.Request) (*http.Response, error)
-}
+//type mockTransport struct {
+//	rt http.RoundTripper
+//	fn func(*http.Request) (*http.Response, error)
+//}
 
-func (m *mockTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	if m.fn != nil {
-		return m.fn(req)
-	}
-	return m.rt.RoundTrip(req)
-}
+//func (m *mockTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+//	if m.fn != nil {
+//		return m.fn(req)
+//	}
+//	return m.rt.RoundTrip(req)
+//}
 
-func makeTestQueryString(t *testing.T) {
+func TestQueryString(t *testing.T) {
 	hc := &thttp.ThttpClient{}
 	queryParams := map[string]interface{}{
 		"user": "john",
-		"id":   123,
+		"id":   "123", //может быть только типа string
 	}
 	expectedQuery := "?user=john&id=123"
 	query := hc.MakeQueryString(queryParams)
@@ -128,21 +125,20 @@ func TestRequest(t *testing.T) {
 	queryParams := map[string]interface{}{
 		"queryParam": "value",
 	}
-	body, _ := json.Marshal(reqParams)
-	resp := http.Response{
-		StatusCode: 200,
-		Body:       ioutil.NopCloser(bytes.NewReader(body)),
-	}
-	client := &http.Client{
-		Transport: &mockTransport{
-			fn: func(req *http.Request) (*http.Response, error) {
-				return &resp, nil
-			},
-		},
-	}
+	//body, _ := json.Marshal(reqParams)
+	//resp := http.Response{
+	//	StatusCode: 200,
+	//	Body:       ioutil.NopCloser(bytes.NewReader(body)),
+	//}
+	//client := &http.Client{
+	//	Transport: &mockTransport{
+	//		fn: func(req *http.Request) (*http.Response, error) {
+	//			return &resp, nil
+	//		},
+	//	},
+	//}
 
-	hc := container.Get("httpClientWrapper").(ThttpClient)
-	hc.httpClient = client
+	hc := container.Get("httpClientWrapper").(thttp.ThttpClient)
 
 	result, statusCode, err := hc.Request("GET", "http://example.com", nil, reqParams, &dest, queryParams)
 	if err != nil {
