@@ -13,7 +13,7 @@ type TLogger struct {
 	logger     *logrus.Logger
 }
 
-func NewLogger() Logger {
+func NewLogger() ILogger {
 
 	return &TLogger{}
 }
@@ -57,4 +57,10 @@ func (T *TLogger) Errorf(msgf string, args ...interface{}) {
 func (T *TLogger) ErrorFull(err error) {
 	//TODO implement me
 	panic("implement me")
+}
+
+// Write implementing for putting it into fiber logger
+func (T *TLogger) Write(p []byte) (n int, err error) {
+
+	return 0, nil
 }

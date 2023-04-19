@@ -9,10 +9,11 @@ import (
 )
 
 var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
-	"config":       config.BuildConfig,
-	"httpClient":   thttp.BuildHttpClient,
-	"logger":       tlogger.BuildLogger,
-	"errorHandler": terrors.BuildErrorHandler,
+	"config":            config.BuildConfig,
+	"httpClient":        thttp.BuildHttpClient,
+	"logger":            tlogger.BuildLogger,
+	"errorHandler":      terrors.BuildErrorHandler,
+	"stacktraceHandler": terrors.BuildStacktraceHandler,
 }
 
 const TagDI = "di"

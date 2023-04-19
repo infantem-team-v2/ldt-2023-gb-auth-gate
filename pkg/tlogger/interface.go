@@ -4,7 +4,7 @@ type LoggerMessenger interface {
 	LoggerMessage() string
 }
 
-type Logger interface {
+type ILogger interface {
 	// sendLog Send log to remote logs storage
 	sendLog(msg string)
 

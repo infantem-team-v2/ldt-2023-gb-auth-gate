@@ -1,0 +1,18 @@
+{
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "TimeStamp",
+        "title": "CryptoBank API",
+        "contact": {
+            "name": "Docs developer",
+            "url": "https://t.me/sirop_work",
+            "email": "bwg.it317@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "bank.onecrypto.pro",
+    "paths": {}
+}
