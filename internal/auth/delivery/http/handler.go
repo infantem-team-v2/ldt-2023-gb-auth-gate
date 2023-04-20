@@ -33,6 +33,16 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 	}
 }
 
+// SignUp godoc
+// @Summary Sign up with email
+// @Description Sign up with email and password
+// @Tags Authorization
+// @Accept json
+// @Produce json
+// @Param email, password, first_name, last_name
+// @Success 200
+// @Failure 404
+// @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var params model.SignUpRequest
@@ -47,6 +57,16 @@ func (ah *AuthHandler) SignUp() fiber.Handler {
 	}
 }
 
+// ValidateEmail godoc
+// @Summary Validating user's email
+// @Description Validating user's email with take message on email and writing code
+// @Tags Authorization
+// @Accept json
+// @Produce json
+// @Param code
+// @Success 200
+// @Failure 404
+// @Router /auth/email/validate [post]
 func (ah *AuthHandler) ValidateEmail() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var params model.EmailValidateRequest
