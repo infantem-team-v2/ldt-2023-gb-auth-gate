@@ -34,7 +34,6 @@ func NewServer() *Server {
 // MapHandlers with middlewares and routers
 func (s *Server) MapHandlers() *Server {
 	sh := s.container.ContainerInstance().Get("stacktraceHandler").(*terrors.StacktraceHandler)
-
 	s.App.Use(mwRecover.New(mwRecover.Config{
 		EnableStackTrace:  true,
 		StackTraceHandler: sh.Handle,
@@ -54,5 +53,6 @@ func (s *Server) MapHandlers() *Server {
 // Run app on tconfig.BaseConfig.System.Port
 func (s *Server) Run() error {
 	s.Logger.Infof("STARTED SERVER")
+	fmt.Println(s.Config.BaseConfig.System.Host, s.Config.BaseConfig.System.Port)
 	return s.App.Listen(fmt.Sprintf("%s:%s", s.Config.BaseConfig.System.Host, s.Config.BaseConfig.System.Port))
 }

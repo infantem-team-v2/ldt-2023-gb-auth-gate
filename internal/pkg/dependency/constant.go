@@ -2,6 +2,7 @@ package dependency
 
 import (
 	"bank_api/config"
+	auth_usecase "bank_api/internal/middleware/usecase"
 	"bank_api/pkg/terrors"
 	"bank_api/pkg/thttp"
 	"bank_api/pkg/thttp/server"
@@ -16,6 +17,7 @@ var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"errorHandler":      terrors.BuildErrorHandler,
 	"stacktraceHandler": terrors.BuildStacktraceHandler,
 	"app":               server.BuildFiberApp,
+	"authUC":            auth_usecase.BuildAuthUsecase,
 }
 
 const TagDI = "di"

@@ -1,6 +1,8 @@
 package main
 
-import "bank_api/internal/pkg/server"
+import (
+	"bank_api/internal/pkg/server"
+)
 
 // @title CryptoBank API
 // @description Core backend specification for B2C app
@@ -27,7 +29,7 @@ import "bank_api/internal/pkg/server"
 // @name TimeStamp
 // @description TimeStamp
 func main() {
-	if err := server.NewServer().Run(); err != nil {
+	if err := server.NewServer().MapHandlers().Run(); err != nil {
 		panic("can't start server")
 	}
 }

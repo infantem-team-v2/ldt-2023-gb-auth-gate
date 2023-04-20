@@ -31,3 +31,9 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 		return c.SendString("sdjgajgwejgivqjweogvaoerhvqeirgaliergv")
 	}
 }
+
+func (ah *AuthHandler) SignUp() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+	}
+}
