@@ -22,6 +22,12 @@ type TStorageConfig struct {
 			Password string `json:"password"`
 		} `json:"Redis"`
 	} `json:"Cache"`
+	Metrics struct {
+		Prometheus struct {
+			Name string `json:"name"`
+			Help string `json:"help"`
+		} `json:"Prometheus"`
+	} `json:"Metrics"`
 	NonRelational struct {
 	}
 }
