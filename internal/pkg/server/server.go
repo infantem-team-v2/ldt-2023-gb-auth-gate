@@ -53,6 +53,5 @@ func (s *Server) MapHandlers() *Server {
 // Run app on tconfig.BaseConfig.System.Port
 func (s *Server) Run() error {
 	s.Logger.Infof("STARTED SERVER")
-	fmt.Println(s.Config.BaseConfig.System.Host, s.Config.BaseConfig.System.Port)
 	return s.App.Listen(fmt.Sprintf("%s:%s", s.Config.BaseConfig.System.Host, s.Config.BaseConfig.System.Port))
 }

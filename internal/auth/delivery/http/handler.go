@@ -2,6 +2,7 @@ package http
 
 import (
 	authInterface "bank_api/internal/auth/interface"
+	"bank_api/internal/auth/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 )
@@ -26,14 +27,36 @@ func (ah *AuthHandler) GetRouter() fiber.Router {
 // @Failure 400 {object}
 // @Router /auth
 func (ah *AuthHandler) VendorAuth() fiber.Handler {
-	return func(c *fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
 		logrus.Info("dsafasjfosdfsda")
-		return c.SendString("sdjgajgwejgivqjweogvaoerhvqeirgaliergv")
+		return ctx.SendString("sdjgajgwejgivqjweogvaoerhvqeirgaliergv")
 	}
 }
 
 func (ah *AuthHandler) SignUp() fiber.Handler {
-	return func(c *fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
+		var params model.SignUpRequest
+		if err := ctx.BodyParser(&params); err != nil {
+			return err
+		}
+		response, err := ah.AuthUC.SignUp(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
+	}
+}
 
+func (ah *AuthHandler) ValidateEmail() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		var params model.EmailValidateRequest
+		if err := ctx.BodyParser(&params); err != nil {
+			return err
+		}
+		response, err := ah.AuthUC.ValidateEmail(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
 	}
 }
