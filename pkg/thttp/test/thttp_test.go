@@ -4,6 +4,7 @@ import (
 	"bank_api/internal/pkg/dependency"
 	"bank_api/pkg/thttp"
 	thttpHeaders "bank_api/pkg/thttp/headers"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"math"
 	"testing"
@@ -39,6 +40,12 @@ type TestCase struct {
 	Tracker string
 }
 
+func TestMultiLoad(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		t.Run(fmt.Sprintf("Testing highload: %d", i), TestLoad)
+	}
+}
+
 func TestLoad(b *testing.T) {
 	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 	httpClient := tdc.ContainerInstance().Get("httpClient").(*thttp.ThttpClient)
@@ -71,7 +78,7 @@ func TestLoad(b *testing.T) {
 		},
 	}
 
-	timeSlice := make([]int64, 9, 10000)
+	timeSlice := make([]int64, 9, 100000)
 	var total int64 = 0
 	c := make(chan int64)
 	for i := 0; i < 100000; i++ {
