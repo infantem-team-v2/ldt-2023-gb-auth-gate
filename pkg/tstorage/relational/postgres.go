@@ -9,17 +9,6 @@ import (
 	"time"
 )
 
-//type Comment struct {
-//	Id              int64    `db:"id"`
-//	UserId          int      `db:"user_id"`
-//	CommentId       null.Int `db:"comment_id"`
-//	Content         string   `db:"content"`
-//	Level           int
-//	VoteCount       int     `db:"voteCount"`
-//	UpdatedAt       float64 `db:"updated_at"`
-//	UpdatedAtNormal string
-//}
-
 func InitPsqlDB(cfg *config.TStorageConfig) (*sqlx.DB, error) {
 	connectionUrl := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		cfg.Relational.Postgres.Host,

@@ -1,4 +1,4 @@
-package _interface
+package authInterface
 
 type RelationalRepository interface {
 }
