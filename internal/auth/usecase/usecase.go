@@ -40,3 +40,14 @@ func (as *AuthUS) ValidateEmail(params *model.EmailValidateRequest) (*model.Emai
 		Valid: valid,
 	}, nil
 }
+
+func (as *AuthUS) SignIn(params *model.SignInRequest) (*model.SignInResponse, error) {
+	as.logger.Infof("POST sig/in")
+	return &model.SignInResponse{
+		StandardResponse: model.StandardResponse{
+			Message:    "SUCCESS",
+			StatusCode: 200,
+		},
+		AccessToken: "access_token",
+	}, nil
+}

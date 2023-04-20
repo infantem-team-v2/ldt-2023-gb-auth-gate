@@ -45,11 +45,35 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 // @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		var params model.SignUpRequest
+		var params model.SignInRequest
 		if err := ctx.BodyParser(&params); err != nil {
 			return err
 		}
-		response, err := ah.AuthUC.SignUp(&params)
+		response, err := ah.AuthUC.SignIn(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
+	}
+}
+
+// SignIn godoc
+// @Summary Sign in
+// @Description Authorization and get access token
+// @Tags Authorization
+// @Accept json
+// @Produce json
+// @Param email, password
+// @Success 200
+// @Failure 404
+// @Router /auth/sign/in [post]
+func (ah *AuthHandler) SignIn() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		var params model.SignInRequest
+		if err := ctx.BodyParser(&params); err != nil {
+			return err
+		}
+		response, err := ah.AuthUC.SignIn(&params)
 		if err != nil {
 			return err
 		}
