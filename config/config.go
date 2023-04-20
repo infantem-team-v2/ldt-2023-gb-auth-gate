@@ -41,7 +41,6 @@ func BuildConfig(ctn di.Container) (interface{}, error) {
 
 func loadConfig() (*viper.Viper, error) {
 	v := viper.New()
-
 	v.AddConfigPath("config") //TEST
 	//v.AddConfigPath("config") //PROD
 	v.SetConfigName("config")
