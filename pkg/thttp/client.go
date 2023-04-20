@@ -69,7 +69,7 @@ func (hc *ThttpClient) Request(
 		req.Header.Set(k, v)
 	}
 
-	reqParamsData, err := json.MarshalIndent(reqParams, "", "\t")
+	reqParamsData, err := json.Marshal(reqParams)
 	if err != nil {
 		return nil, 0, err
 	}
