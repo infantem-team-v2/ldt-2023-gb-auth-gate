@@ -3,7 +3,6 @@ package relational
 import (
 	"bank_api/pkg/tstorage/config"
 	"fmt"
-	"github.com/fiorix/go-redis/redis"
 	_ "github.com/jackc/pgx/stdlib" // pgx driver
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -36,18 +35,4 @@ func InitPsqlDB(cfg *config.TStorageConfig) (*sqlx.DB, error) {
 	database.DB.SetConnMaxIdleTime(time.Duration(cfg.Relational.Postgres.ConnMaxIdleTime) * time.Second)
 	database.DB.SetMaxOpenConns(cfg.Relational.Postgres.MaxOpenConns)
 	return database, nil
-}
-
-func InitRedis(cfg *config.TStorageConfig) (*redis.Client, error) {
-	url := fmt.Sprintf(
-		"%s:%s db=%d passwd=%s",
-		cfg.Cache.Redis.Host,
-		cfg.Cache.Redis.Port,
-		cfg.Cache.Redis.DB,
-		cfg.Cache.Redis.Password)
-	client, err := redis.NewClient(url)
-	if err != nil {
-		return nil, err
-	}
-	return client, nil
 }
