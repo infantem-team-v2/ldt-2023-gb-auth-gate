@@ -13,13 +13,13 @@ import (
 
 type ThttpClient struct {
 	httpClient *http.Client
-	Config     *config.Config `di:"config"`
-	Logger     tlogger.Logger `di:"logger"`
+	Config     *config.Config  `di:"config"`
+	Logger     tlogger.ILogger `di:"logger"`
 }
 
 func BuildHttpClient(ctn di.Container) (interface{}, error) {
 	cfg := ctn.Get("config").(*config.Config)
-	logger := ctn.Get("logger").(tlogger.Logger)
+	logger := ctn.Get("logger").(tlogger.ILogger)
 	httpClient := http.Client{
 		Name:         "bank-client",
 		ReadTimeout:  time.Duration(cfg.HttpConfig.TimeOut) * time.Second,

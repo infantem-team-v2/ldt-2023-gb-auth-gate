@@ -1,19 +1,31 @@
 package tsecure
 
-import "github.com/fernet/fernet-go"
+import (
+	"bank_api/config"
+	"github.com/fernet/fernet-go"
+	"github.com/sarulabs/di"
+)
 
-type FernetEncryptor struct {
+type FernetCrypto struct {
 	EncryptionKey *fernet.Key
 }
 
-func NewFernetEncryptor() {
+func BuildFernetEncryptor(ctn di.Container) (interface{}, error) {
+	rawKey := ctn.Get("config").(*config.Config).SecureConfig.Fernet.Key
+	key, err := fernet.DecodeKey(rawKey)
+	if err != nil {
+		return nil, err
+	}
+	return &FernetCrypto{
+		EncryptionKey: key,
+	}, nil
 
 }
 
-func (fe *FernetEncryptor) Encrypt(message string) (cipher string) {
-	return ""
+func (fe *FernetCrypto) Encrypt(message string) (cipher string, err error) {
+	return fe.Encrypt(message)
 }
 
-func (fe *FernetEncryptor) Decrypt(cipher string) (message string, err error) {
-	return "", nil
+func (fe *FernetCrypto) Decrypt(cipher string) (message string, err error) {
+	return fe.Decrypt(cipher)
 }
