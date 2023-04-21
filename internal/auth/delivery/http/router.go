@@ -1,5 +1,6 @@
 package http
 
 func (ah *AuthHandler) SetRoutes() {
-	ah.Router.Get("/", ah.VendorAuth())
+	ah.router.Get("/", ah.VendorAuth())
+
 }

@@ -2,7 +2,7 @@ package server
 
 import (
 	"bank_api/config"
-	"bank_api/internal/auth/delivery/http"
+	_ "bank_api/docs"
 	"bank_api/internal/pkg/dependency"
 	"bank_api/pkg/terrors"
 	"bank_api/pkg/tlogger"
@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	mwLogger "github.com/gofiber/fiber/v2/middleware/logger"
 	mwRecover "github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/swagger"
 	"os"
 )
 
@@ -33,21 +34,24 @@ func NewServer() *Server {
 
 // MapHandlers with middlewares and routers
 func (s *Server) MapHandlers() *Server {
+	// Getting dependencies from container
 	sh := s.container.ContainerInstance().Get("stacktraceHandler").(*terrors.StacktraceHandler)
 
+	// Make recover on top of app's stack
 	s.App.Use(mwRecover.New(mwRecover.Config{
 		EnableStackTrace:  true,
 		StackTraceHandler: sh.Handle,
 	}))
+
+	// Logging fiber's info about requests
 	s.App.Use(mwLogger.New(mwLogger.Config{
 		Output: os.Stdout,
 	}))
-	router := s.App.Group("auth")
-	ah := &http.AuthHandler{
-		Router: router,
-	}
-	s.container.Inject(ah)
-	ah.SetRoutes()
+
+	// Swagger docs on /docs
+	s.App.Get("/docs/*", swagger.HandlerDefault)
+
+	//ah.SetRoutes()
 	return s
 }
 
