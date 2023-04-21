@@ -9,3 +9,7 @@ SignIn:
 SignUp:
   httpMethod: POST
   route: /sign/up
+
+ValidateEmail:
+  httpMethod: POST
+  route: /email/validate

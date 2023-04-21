@@ -5,6 +5,7 @@ import (
 	_ "bank_api/docs"
 	"bank_api/internal/pkg/dependency"
 	"bank_api/pkg/terrors"
+	"bank_api/pkg/thttp/server"
 	"bank_api/pkg/tlogger"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
@@ -32,6 +33,14 @@ func NewServer() *Server {
 	return s
 }
 
+func (s *Server) mapHandlers() {
+	for _, hFunc := range emptyHandlers {
+		h := hFunc(s.App)
+		s.container.Inject(h)
+		server.MapRoutes(h)
+	}
+}
+
 // MapHandlers with middlewares and routers
 func (s *Server) MapHandlers() *Server {
 	// Getting dependencies from container
@@ -52,6 +61,7 @@ func (s *Server) MapHandlers() *Server {
 	s.App.Get("/docs/*", swagger.HandlerDefault)
 
 	//ah.SetRoutes()
+	s.mapHandlers()
 	return s
 }
 

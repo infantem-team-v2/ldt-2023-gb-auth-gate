@@ -22,7 +22,6 @@ require (
 	github.com/swaggo/swag v1.16.1
 	github.com/valyala/fasthttp v1.45.0
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
-	google.golang.org/appengine v1.6.7
 	gopkg.in/yaml.v2 v2.4.0
 )
 

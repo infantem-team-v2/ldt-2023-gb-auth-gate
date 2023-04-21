@@ -4,6 +4,7 @@ import (
 	_ "bank_api/internal/auth/interface"
 	"bank_api/internal/auth/model"
 	_ "bank_api/internal/auth/usecase"
+	"bank_api/internal/pkg/common"
 	"bank_api/internal/pkg/server"
 	"bank_api/pkg/thttp"
 	"bytes"
@@ -13,7 +14,7 @@ import (
 	"testing"
 )
 
-//======================SIGN_UP========================//
+// ======================SIGN_UP========================//
 func TestSignUp(t *testing.T) {
 	tests := map[string]model.SignUpRequest{
 		"test1": {
@@ -37,19 +38,19 @@ func TestSignUp(t *testing.T) {
 
 	expected := map[string]model.SignUpResponse{
 		"test1": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Created",
 				StatusCode: 201,
 			},
 		},
 		"test2": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "User already exists!",
 				StatusCode: 409,
 			},
 		},
 		"test3": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Unauthorized Error",
 				StatusCode: 401,
 			},
@@ -68,7 +69,7 @@ func TestSignUp(t *testing.T) {
 	}
 }
 
-//=========================SIGN_IN==========================//
+// =========================SIGN_IN==========================//
 func TestSignIn(t *testing.T) {
 	tests := map[string]model.SignInRequest{
 		"test1": {
@@ -86,19 +87,19 @@ func TestSignIn(t *testing.T) {
 
 	expected := map[string]model.SignInResponse{
 		"test1": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Success",
 				StatusCode: 200,
 			},
 		},
 		"test2": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Not found!",
 				StatusCode: 404,
 			},
 		},
 		"test3": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Unauthorized Error",
 				StatusCode: 401,
 			},
@@ -117,7 +118,7 @@ func TestSignIn(t *testing.T) {
 	}
 }
 
-//==========================VALIDATE_EMAIL=========================//
+// ==========================VALIDATE_EMAIL=========================//
 func TestValidateEmail(t *testing.T) {
 	tests := map[string]model.EmailValidateRequest{
 		"test1": {
@@ -132,19 +133,19 @@ func TestValidateEmail(t *testing.T) {
 
 	expected := map[string]model.EmailValidateResponse{
 		"test1": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Accepted",
 				StatusCode: 202,
 			},
 		},
 		"test2": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Request validation failed",
 				StatusCode: 400,
 			},
 		},
 		"test3": {
-			StandardResponse: model.StandardResponse{
+			Response: common.Response{
 				Message:    "Request validation failed",
 				StatusCode: 400,
 			},

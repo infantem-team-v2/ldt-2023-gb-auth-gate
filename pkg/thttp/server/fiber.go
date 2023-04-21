@@ -14,9 +14,9 @@ func BuildFiberApp(ctn di.Container) (interface{}, error) {
 	return fiber.New(fiber.Config{
 		AppName:               cfg.BaseConfig.Service.Name,
 		DisableStartupMessage: false,
-		Prefork:               true,
-		ErrorHandler:          errorHandler.Handle,
-		WriteTimeout:          time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
-		ReadTimeout:           time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
+		//Prefork:               true,
+		ErrorHandler: errorHandler.Handle,
+		WriteTimeout: time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
+		ReadTimeout:  time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
 	}), nil
 }
