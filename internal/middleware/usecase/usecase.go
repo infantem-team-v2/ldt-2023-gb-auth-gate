@@ -1,1 +1,1 @@
-package usecase
+package auth_usecase

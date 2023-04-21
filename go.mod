@@ -14,6 +14,7 @@ require (
 	github.com/lib/pq v1.10.8
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.15.0
+	github.com/rabbitmq/amqp091-go v1.8.0
 	github.com/sarulabs/di v2.0.0+incompatible
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.15.0

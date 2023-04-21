@@ -6,11 +6,21 @@ import (
 	thttpHeaders "bank_api/pkg/thttp/headers"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"math"
 	"testing"
 	"time"
 )
 
-// =======================HTTP=======================//
+type TestCase struct {
+	Public  string
+	Private string
+	Tracker string
+}
+
+// api_key = 'jm5r4eutgpk2hqgt5dkrqn3ihf75wtvsfdzou4wf7feh7unmmsr5sv53yazfxuv8'
+// api_secret = 'op9io5eyfne37xb2ad2ovyohb7oaqofjfp7yabuusz9tfbmm4z6hdkn7bx4gojfbq2fnuvxgecii5cocsrsu6x4ed9enui7z6t66hbfpdc4xcxmdca2xcb8t6tz2a8gz'
+
+// =======================REQUEST=======================//
 func TestRequest(t *testing.T) {
 	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 
@@ -31,20 +41,14 @@ func TestRequest(t *testing.T) {
 	})
 }
 
-// api_key = 'jm5r4eutgpk2hqgt5dkrqn3ihf75wtvsfdzou4wf7feh7unmmsr5sv53yazfxuv8'
-// api_secret = 'op9io5eyfne37xb2ad2ovyohb7oaqofjfp7yabuusz9tfbmm4z6hdkn7bx4gojfbq2fnuvxgecii5cocsrsu6x4ed9enui7z6t66hbfpdc4xcxmdca2xcb8t6tz2a8gz'
-type TestCase struct {
-	Public  string
-	Private string
-	Tracker string
-}
-
+//==========================MULTI_LOAD=========================//
 func TestMultiLoad(t *testing.T) {
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 10; i++ {
 		t.Run(fmt.Sprintf("Testing highload: %d", i), TestLoad)
 	}
 }
 
+//=========================LOAD==========================//
 func TestLoad(b *testing.T) {
 	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 	httpClient := tdc.ContainerInstance().Get("httpClient").(*thttp.ThttpClient)
@@ -77,40 +81,33 @@ func TestLoad(b *testing.T) {
 		},
 	}
 
-	//timeSlice := make([]int64, 9, 100000)
+	timeSlice := make([]int64, 9, 100000)
 	var total int64 = 0
-	var timeCounter int64 = 0
-	//c := make(chan int64)
-	//cTimeCounter := make(chan int64)
-	for i := 0; i < 500; i++ {
-		b.Run(fmt.Sprintf("Request %d", i), func(t *testing.T) {
-			body := map[string]string{"token": "USDTTRC"}
-			headers, _ := thttpHeaders.MakeAuthHeaders(body,
-				testCases[i%4].Public,
-				testCases[i%4].Private,
-				thttp.POST,
-			)
-			go func() {
-				for ooo := 0; ooo < 5; ooo++ {
-					httpClient.Request(thttp.POST, "https://test.onecrypto.pro/api/token/balance", headers, body, nil, nil)
-				}
+	c := make(chan int64)
+	for i := 0; i < 100000; i++ {
+		go func() {
+			for j := 0; j < 10; j++ {
+				body := map[string]string{"tracker_id": testCases[int(math.Abs(float64(i%5)))].Tracker}
+				headers, _ := thttpHeaders.MakeAuthHeaders(body,
+					testCases[i%5].Public,
+					testCases[i%5].Private,
+					thttp.POST,
+				)
+				start := time.Now().UnixNano()
+				httpClient.Request(thttp.POST, "https://test.onecrypto.pro/api/transaction/get", headers, body, nil, nil)
+				end := time.Now().UnixNano()
+				timeSlice = append(timeSlice, end-start)
+				c <- end - start
+			}
 
-			}()
-			start := time.Now().UnixNano()
-			httpClient.Request(thttp.POST, "https://test.onecrypto.pro/api/token/balance", headers, body, nil, nil)
-			end := time.Now().UnixNano()
-			//timeSlice = append(timeSlice, end-start)
-			timeCounter++
-			total += end - start
-			t.Logf("Time for attempt (ns): %d", end-start)
-			t.Logf("Avg time: %d. All time: %d", total/timeCounter, total)
-		})
-		b.Logf("Avg time: %d. All time: %d", total/timeCounter, total)
+		}()
+
 	}
-	//timeCounter += <-cTimeCounter
-
+	total += <-c
+	b.Logf("Avg time: %d", total/int64(len(timeSlice)))
 }
 
+//=======================MAKE_QUERY_STRING============================//
 func TestMakeQueryString(t *testing.T) {
 	hc := thttp.ThttpClient{}
 	t.Run("non-empty query params", func(t *testing.T) {
