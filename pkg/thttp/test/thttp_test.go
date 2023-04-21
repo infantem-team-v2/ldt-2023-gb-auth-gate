@@ -11,7 +11,16 @@ import (
 	"time"
 )
 
-// =======================HTTP=======================//
+type TestCase struct {
+	Public  string
+	Private string
+	Tracker string
+}
+
+// api_key = 'jm5r4eutgpk2hqgt5dkrqn3ihf75wtvsfdzou4wf7feh7unmmsr5sv53yazfxuv8'
+// api_secret = 'op9io5eyfne37xb2ad2ovyohb7oaqofjfp7yabuusz9tfbmm4z6hdkn7bx4gojfbq2fnuvxgecii5cocsrsu6x4ed9enui7z6t66hbfpdc4xcxmdca2xcb8t6tz2a8gz'
+
+// =======================REQUEST=======================//
 func TestRequest(t *testing.T) {
 	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 
@@ -32,20 +41,14 @@ func TestRequest(t *testing.T) {
 	})
 }
 
-// api_key = 'jm5r4eutgpk2hqgt5dkrqn3ihf75wtvsfdzou4wf7feh7unmmsr5sv53yazfxuv8'
-// api_secret = 'op9io5eyfne37xb2ad2ovyohb7oaqofjfp7yabuusz9tfbmm4z6hdkn7bx4gojfbq2fnuvxgecii5cocsrsu6x4ed9enui7z6t66hbfpdc4xcxmdca2xcb8t6tz2a8gz'
-type TestCase struct {
-	Public  string
-	Private string
-	Tracker string
-}
-
+//==========================MULTI_LOAD=========================//
 func TestMultiLoad(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		t.Run(fmt.Sprintf("Testing highload: %d", i), TestLoad)
 	}
 }
 
+//=========================LOAD==========================//
 func TestLoad(b *testing.T) {
 	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 	httpClient := tdc.ContainerInstance().Get("httpClient").(*thttp.ThttpClient)
@@ -104,6 +107,7 @@ func TestLoad(b *testing.T) {
 	b.Logf("Avg time: %d", total/int64(len(timeSlice)))
 }
 
+//=======================MAKE_QUERY_STRING============================//
 func TestMakeQueryString(t *testing.T) {
 	hc := thttp.ThttpClient{}
 	t.Run("non-empty query params", func(t *testing.T) {

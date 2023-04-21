@@ -22,8 +22,8 @@ func (as *AuthUS) SignUp(params *model.SignUpRequest) (*model.SignUpResponse, er
 	as.logger.Infof("POST sign/up")
 	return &model.SignUpResponse{
 		StandardResponse: model.StandardResponse{
-			Message:    "SUCCESS",
-			StatusCode: 200,
+			Message:    "CREATED",
+			StatusCode: 201,
 		},
 	}, nil
 }

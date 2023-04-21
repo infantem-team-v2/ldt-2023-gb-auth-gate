@@ -2,7 +2,7 @@ package model
 
 type StandardResponse struct {
 	Message    string `json:"message"`
-	StatusCode uint16 `json:"status_code"`
+	StatusCode int    `json:"status_code"`
 }
 
 type SignUpRequest struct {

@@ -10,7 +10,6 @@ import (
 type AuthHandler struct {
 	AuthUC authInterface.UseCase `di:"authUC"`
 	Router fiber.Router
-	App    fiber.App
 }
 
 func (ah *AuthHandler) GetRouter() fiber.Router {
@@ -46,11 +45,11 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 // @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		var params model.SignInRequest
+		var params model.SignUpRequest
 		if err := ctx.BodyParser(&params); err != nil {
 			return err
 		}
-		response, err := ah.AuthUC.SignIn(&params)
+		response, err := ah.AuthUC.SignUp(&params)
 		if err != nil {
 			return err
 		}

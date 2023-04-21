@@ -1,22 +1,20 @@
 package test
 
 import (
-	"bank_api/internal/auth/delivery/http"
-	authInterface "bank_api/internal/auth/interface"
+	_ "bank_api/internal/auth/interface"
 	"bank_api/internal/auth/model"
-	"bank_api/internal/pkg/dependency"
+	_ "bank_api/internal/auth/usecase"
+	"bank_api/internal/pkg/server"
 	"bank_api/pkg/thttp"
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	netHttp "net/http"
 	"testing"
 )
 
-//=======================AUTH=======================//
+//======================SIGN_UP========================//
 func TestSignUp(t *testing.T) {
-	tdc := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
 	tests := map[string]model.SignUpRequest{
 		"test1": {
 			Email:     "test@test.com",
@@ -40,8 +38,8 @@ func TestSignUp(t *testing.T) {
 	expected := map[string]model.SignUpResponse{
 		"test1": {
 			StandardResponse: model.StandardResponse{
-				Message:    "SUCCESS",
-				StatusCode: 200,
+				Message:    "Created",
+				StatusCode: 201,
 			},
 		},
 		"test2": {
@@ -57,19 +55,110 @@ func TestSignUp(t *testing.T) {
 			},
 		},
 	}
-	au := tdc.ContainerInstance().Get("authUC").(authInterface.UseCase)
-	ah := http.AuthHandler{
-		AuthUC: au,
-	}
-	ah.SetRoutes()
+	serverTest := server.NewServer().MapHandlers()
+
 	for i, test := range tests {
-		fmt.Println(i)
 		body, err := json.Marshal(test)
 		req, _ := netHttp.NewRequest(thttp.POST, "/sign/up", bytes.NewBuffer(body))
 		if err != nil {
 			t.Fatal(err)
 		}
-		resp, err := ah.App.Test(req, -1)
+		resp, err := serverTest.App.Test(req, -1)
+		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
+	}
+}
+
+//=========================SIGN_IN==========================//
+func TestSignIn(t *testing.T) {
+	tests := map[string]model.SignInRequest{
+		"test1": {
+			Email:    "test@test.com",
+			Password: "Password1@",
+		},
+		"test2": {
+			Email:    "aga@da.verno",
+			Password: "shutka",
+		},
+		"test3": {
+			Email:    "net.chto.eto",
+			Password: "",
+		}}
+
+	expected := map[string]model.SignInResponse{
+		"test1": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Success",
+				StatusCode: 200,
+			},
+		},
+		"test2": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Not found!",
+				StatusCode: 404,
+			},
+		},
+		"test3": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Unauthorized Error",
+				StatusCode: 401,
+			},
+		},
+	}
+	serverTest := server.NewServer().MapHandlers()
+
+	for i, test := range tests {
+		body, err := json.Marshal(test)
+		req, _ := netHttp.NewRequest(thttp.POST, "/sign/in", bytes.NewBuffer(body))
+		if err != nil {
+			t.Fatal(err)
+		}
+		resp, err := serverTest.App.Test(req, -1)
+		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
+	}
+}
+
+//==========================VALIDATE_EMAIL=========================//
+func TestValidateEmail(t *testing.T) {
+	tests := map[string]model.EmailValidateRequest{
+		"test1": {
+			Code: 123456,
+		},
+		"test2": {
+			Code: 123,
+		},
+		"test3": {
+			Code: 232323232,
+		}}
+
+	expected := map[string]model.EmailValidateResponse{
+		"test1": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Accepted",
+				StatusCode: 202,
+			},
+		},
+		"test2": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Request validation failed",
+				StatusCode: 400,
+			},
+		},
+		"test3": {
+			StandardResponse: model.StandardResponse{
+				Message:    "Request validation failed",
+				StatusCode: 400,
+			},
+		},
+	}
+	serverTest := server.NewServer().MapHandlers()
+
+	for i, test := range tests {
+		body, err := json.Marshal(test)
+		req, _ := netHttp.NewRequest(thttp.POST, "/email/validate", bytes.NewBuffer(body))
+		if err != nil {
+			t.Fatal(err)
+		}
+		resp, err := serverTest.App.Test(req, -1)
 		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
 	}
 }
