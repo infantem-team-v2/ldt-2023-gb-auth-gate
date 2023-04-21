@@ -1,3 +1,6 @@
+definitions:
+  server.CommonResponse:
+    type: object
 host: bank.onecrypto.pro
 info:
   contact:
@@ -7,7 +10,36 @@ info:
   description: TimeStamp
   title: CryptoBank API
   version: 1.0.0
-paths: {}
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Accepts token from vendor which we process and returning pair of
+        tokens
+      parameters:
+      - description: Vendor which is providing authorization
+        enum:
+        - apple
+        - google
+        in: query
+        name: vendor
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/server.CommonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.CommonResponse'
+      summary: Sign in or sign up via Apple or Google
+      tags:
+      - Authorization
 schemes:
 - https
 swagger: "2.0"

@@ -9,11 +9,11 @@ import (
 
 type AuthHandler struct {
 	AuthUC authInterface.UseCase `di:"authUC"`
-	Router fiber.Router
+	router fiber.Router
 }
 
 func (ah *AuthHandler) GetRouter() fiber.Router {
-	return ah.Router
+	return ah.router
 }
 
 // VendorAuth godoc
@@ -23,9 +23,9 @@ func (ah *AuthHandler) GetRouter() fiber.Router {
 // @Accept json
 // @Produce json
 // @Param vendor query string true "Vendor which is providing authorization" Enums(apple, google)
-// @Success 200 {object}
-// @Failure 400 {object}
-// @Router /auth
+// @Success 200 {object} server.CommonResponse
+// @Failure 400 {object} server.CommonResponse
+// @Router /auth [post]
 func (ah *AuthHandler) VendorAuth() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		logrus.Info("dsafasjfosdfsda")
