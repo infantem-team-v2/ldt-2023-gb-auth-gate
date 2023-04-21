@@ -2,7 +2,7 @@ package model
 
 type StandardResponse struct {
 	Message    string `json:"message"`
-	StatusCode uint8  `json:"status_code"`
+	StatusCode uint16 `json:"status_code"`
 }
 
 type SignUpRequest struct {
@@ -34,4 +34,7 @@ type SignInRequest struct {
 type SignInResponse struct {
 	StandardResponse
 	AccessToken string `json:"access_token"`
+	Email       string `json:"email"`
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
 }

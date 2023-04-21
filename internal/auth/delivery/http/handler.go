@@ -10,6 +10,7 @@ import (
 type AuthHandler struct {
 	AuthUC authInterface.UseCase `di:"authUC"`
 	Router fiber.Router
+	App    fiber.App
 }
 
 func (ah *AuthHandler) GetRouter() fiber.Router {
