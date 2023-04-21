@@ -1,9 +1,11 @@
 package terrors
 
 import (
+	"bank_api/internal/pkg/common"
 	"bank_api/pkg/tlogger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
+	"strings"
 )
 
 type HttpErrorHandler struct {
@@ -21,5 +23,14 @@ func (heh *HttpErrorHandler) Handle(ctx *fiber.Ctx, err error) error {
 		heh.logger.ErrorFull(tErr)
 		return ctx.Status(tErr.statusCode).JSON(tErr.externalMessage)
 	}
-	return nil
+	if strings.Contains(err.Error(), "Cannot") {
+		return ctx.Status(404).JSON(common.Response{
+			StatusCode: 404,
+			Message:    err.Error(),
+		})
+	}
+	return ctx.Status(500).JSON(common.Response{
+		StatusCode: 500,
+		Message:    err.Error(),
+	})
 }

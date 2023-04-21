@@ -7,11 +7,13 @@ import (
 	"bank_api/pkg/thttp"
 	"bank_api/pkg/thttp/server"
 	"bank_api/pkg/tlogger"
+	tstorageRelational "bank_api/pkg/tstorage/relational"
 	"github.com/sarulabs/di"
 )
 
 var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"config":            config.BuildConfig,
+	"postgres":          tstorageRelational.BuildPostgres,
 	"httpClient":        thttp.BuildHttpClient,
 	"logger":            tlogger.BuildLogger,
 	"errorHandler":      terrors.BuildErrorHandler,

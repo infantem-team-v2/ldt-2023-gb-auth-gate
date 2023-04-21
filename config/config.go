@@ -6,6 +6,7 @@ import (
 	thttpConfig "bank_api/pkg/thttp/config"
 	tloggerConfig "bank_api/pkg/tlogger/config"
 	tsecureConfig "bank_api/pkg/tsecure/config"
+	tstorageConfig "bank_api/pkg/tstorage/config"
 	"fmt"
 	"github.com/sarulabs/di"
 	"github.com/spf13/viper"
@@ -13,11 +14,12 @@ import (
 )
 
 type Config struct {
-	BaseConfig   tconfig.BaseConfig
-	HttpConfig   thttpConfig.ThttpConfig
-	LoggerConfig tloggerConfig.TLoggerConfig
-	SecureConfig tsecureConfig.TSecureConfig
-	AmqpConfig   dconfig.AmqpConfig
+	BaseConfig    tconfig.BaseConfig
+	HttpConfig    thttpConfig.ThttpConfig
+	LoggerConfig  tloggerConfig.TLoggerConfig
+	SecureConfig  tsecureConfig.TSecureConfig
+	StorageConfig tstorageConfig.TStorageConfig
+	AmqpConfig    dconfig.AmqpConfig
 }
 
 func NewConfig() *Config {
