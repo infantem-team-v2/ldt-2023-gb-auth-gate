@@ -50,13 +50,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.Response"
+                            "$ref": "#/definitions/common.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.Response"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -96,7 +96,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.Response"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -136,7 +136,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.Response"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -176,7 +176,7 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.Response"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -184,6 +184,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "common.Response": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.EmailValidateRequest": {
             "type": "object",
             "properties": {
@@ -244,7 +255,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
-                    "description": "server.CommonParams",
+                    "description": "server.Params",
                     "type": "string"
                 },
                 "first_name": {
@@ -259,17 +270,6 @@ const docTemplate = `{
             }
         },
         "model.SignUpResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "status_code": {
-                    "type": "integer"
-                }
-            }
-        },
-        "server.Response": {
             "type": "object",
             "properties": {
                 "message": {

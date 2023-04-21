@@ -1,4 +1,11 @@
 definitions:
+  common.Response:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
   model.EmailValidateRequest:
     properties:
       code:
@@ -38,7 +45,7 @@ definitions:
   model.SignUpRequest:
     properties:
       email:
-        description: server.CommonParams
+        description: server.Params
         type: string
       first_name:
         type: string
@@ -48,13 +55,6 @@ definitions:
         type: string
     type: object
   model.SignUpResponse:
-    properties:
-      message:
-        type: string
-      status_code:
-        type: integer
-    type: object
-  server.CommonResponse:
     properties:
       message:
         type: string
@@ -92,11 +92,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
       summary: Sign in or sign up via Apple or Google
       tags:
       - Authorization
@@ -123,7 +123,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
       summary: Validating user's email
       tags:
       - Authorization
@@ -149,7 +149,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
       summary: Sign in
       tags:
       - Authorization
@@ -175,7 +175,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
       summary: Sign up with email
       tags:
       - Authorization

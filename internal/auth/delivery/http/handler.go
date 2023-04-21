@@ -36,8 +36,8 @@ func NewAuthHandler(app *fiber.App) server.IHandler {
 // @Accept json
 // @Produce json
 // @Param vendor query string true "Vendor which is providing authorization" Enums(apple, google)
-// @Success 200 {object} server.Response
-// @Failure 400 {object} server.Response
+// @Success 200 {object} common.Response
+// @Failure 400 {object} common.Response
 // @Router /auth [post]
 func (ah *AuthHandler) VendorAuth() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -54,7 +54,7 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 // @Produce json
 // @Param data body model.SignUpRequest true "Authorization data from user"
 // @Success 200 {object} model.SignUpResponse
-// @Failure 404 {object} server.Response
+// @Failure 404 {object} common.Response
 // @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -78,7 +78,7 @@ func (ah *AuthHandler) SignUp() fiber.Handler {
 // @Produce json
 // @Param data body model.SignInRequest true "Authorization data from user"
 // @Success 200 {object} model.SignInResponse
-// @Failure 404 {object} server.Response
+// @Failure 404 {object} common.Response
 // @Router /auth/sign/in [post]
 func (ah *AuthHandler) SignIn() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -102,7 +102,7 @@ func (ah *AuthHandler) SignIn() fiber.Handler {
 // @Produce json
 // @Param code body model.EmailValidateRequest true "Data for validation by email from app"
 // @Success 200 {object} model.EmailValidateResponse
-// @Failure 404 {object} server.Response
+// @Failure 404 {object} common.Response
 // @Router /auth/email/validate [post]
 func (ah *AuthHandler) ValidateEmail() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {

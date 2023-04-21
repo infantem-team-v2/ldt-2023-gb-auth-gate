@@ -45,13 +45,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/server.CommonResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/server.CommonResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -91,7 +91,7 @@
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.CommonResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -131,7 +131,7 @@
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.CommonResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -171,7 +171,7 @@
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/server.CommonResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     }
                 }
@@ -179,6 +179,17 @@
         }
     },
     "definitions": {
+        "common.Response": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.EmailValidateRequest": {
             "type": "object",
             "properties": {
@@ -239,7 +250,7 @@
             "type": "object",
             "properties": {
                 "email": {
-                    "description": "server.CommonParams",
+                    "description": "server.Params",
                     "type": "string"
                 },
                 "first_name": {
@@ -254,17 +265,6 @@
             }
         },
         "model.SignUpResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "status_code": {
-                    "type": "integer"
-                }
-            }
-        },
-        "server.CommonResponse": {
             "type": "object",
             "properties": {
                 "message": {

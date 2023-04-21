@@ -60,7 +60,7 @@ func TestSignUp(t *testing.T) {
 
 	for i, test := range tests {
 		body, err := json.Marshal(test)
-		req, _ := netHttp.NewRequest(thttp.POST, "/sign/up", bytes.NewBuffer(body))
+		req, _ := netHttp.NewRequest(thttp.POST, "/auth/sign/up", bytes.NewBuffer(body))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -109,7 +109,7 @@ func TestSignIn(t *testing.T) {
 
 	for i, test := range tests {
 		body, err := json.Marshal(test)
-		req, _ := netHttp.NewRequest(thttp.POST, "/sign/in", bytes.NewBuffer(body))
+		req, _ := netHttp.NewRequest(thttp.POST, "/auth/sign/in", bytes.NewBuffer(body))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -155,7 +155,7 @@ func TestValidateEmail(t *testing.T) {
 
 	for i, test := range tests {
 		body, err := json.Marshal(test)
-		req, _ := netHttp.NewRequest(thttp.POST, "/email/validate", bytes.NewBuffer(body))
+		req, _ := netHttp.NewRequest(thttp.POST, "/auth/email/validate", bytes.NewBuffer(body))
 		if err != nil {
 			t.Fatal(err)
 		}
