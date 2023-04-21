@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bank_api/pkg/damqp/config"
 	"bank_api/pkg/tconfig"
 	thttpConfig "bank_api/pkg/thttp/config"
 	tloggerConfig "bank_api/pkg/tlogger/config"
@@ -16,6 +17,7 @@ type Config struct {
 	HttpConfig   thttpConfig.ThttpConfig
 	LoggerConfig tloggerConfig.TLoggerConfig
 	SecureConfig tsecureConfig.TSecureConfig
+	AmqpConfig   dconfig.AmqpConfig
 }
 
 func NewConfig() *Config {
