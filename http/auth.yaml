@@ -2,13 +2,13 @@ VendorAuth:
   httpMethod: POST
   route: /
 
-SignIn:
-  httpMethod: POST
-  route: /sign/in
-
 SignUp:
   httpMethod: POST
   route: /sign/up
+
+SignIn:
+  httpMethod: POST
+  route: /sign/in
 
 ValidateEmail:
   httpMethod: POST
