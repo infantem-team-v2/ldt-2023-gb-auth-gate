@@ -81,10 +81,28 @@ func (e *tError) Wrap(err IError) IError {
 	return e
 }
 
+func stacktraceToString(st *xruntime.StackTrace, doNewLine bool) (serializedFrames string) {
+	frames := st.Frames()
+	for _, frame := range frames {
+		serializedFrames += fmt.Sprintf("File: %s; Function: %s;  Line: %d;",
+			frame.File, frame.Function, frame.Line)
+		if doNewLine {
+			serializedFrames += "\n"
+		}
+	}
+	return serializedFrames
+}
+
 func (e *tError) Error() string {
+
 	return ""
 }
 
 func (e *tError) LoggerMessage() string {
-	return ""
+	serializedFrames := stacktraceToString(e.stackTrace, false)
+	return fmt.Sprintf(labels,
+		e.statusCode,
+		e.externalMessage.InternalCode, e.externalMessage.Description,
+		e.internalError.Error(),
+		serializedFrames)
 }
