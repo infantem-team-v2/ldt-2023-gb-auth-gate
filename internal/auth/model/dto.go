@@ -1,12 +1,11 @@
 package model
 
-type StandardResponse struct {
-	Message    string `json:"message"`
-	StatusCode int    `json:"status_code"`
-}
+import (
+	"bank_api/internal/pkg/common"
+)
 
 type SignUpRequest struct {
-	//server.CommonParams
+	//server.Params
 	Email     string `json:"email,required"`
 	Password  string `json:"password,required"`
 	FirstName string `json:"first_name,required"`
@@ -14,7 +13,7 @@ type SignUpRequest struct {
 }
 
 type SignUpResponse struct {
-	StandardResponse
+	common.Response
 }
 
 type EmailValidateRequest struct {
@@ -22,7 +21,7 @@ type EmailValidateRequest struct {
 }
 
 type EmailValidateResponse struct {
-	StandardResponse
+	common.Response
 	Valid bool `json:"valid"`
 }
 
@@ -32,7 +31,7 @@ type SignInRequest struct {
 }
 
 type SignInResponse struct {
-	StandardResponse
+	common.Response
 	AccessToken string `json:"access_token"`
 	Email       string `json:"email"`
 	FirstName   string `json:"first_name"`

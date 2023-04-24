@@ -3,17 +3,31 @@ package http
 import (
 	authInterface "bank_api/internal/auth/interface"
 	"bank_api/internal/auth/model"
+	"bank_api/pkg/terrors"
+	"bank_api/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 )
 
 type AuthHandler struct {
 	AuthUC authInterface.UseCase `di:"authUC"`
+	prefix string
 	router fiber.Router
 }
 
 func (ah *AuthHandler) GetRouter() fiber.Router {
 	return ah.router
+}
+
+func (ah *AuthHandler) GetPrefix() string {
+	return ah.prefix
+}
+
+func NewAuthHandler(app *fiber.App) server.IHandler {
+	return &AuthHandler{
+		router: app.Group("auth"),
+		prefix: "auth",
+	}
 }
 
 // VendorAuth godoc
@@ -23,13 +37,13 @@ func (ah *AuthHandler) GetRouter() fiber.Router {
 // @Accept json
 // @Produce json
 // @Param vendor query string true "Vendor which is providing authorization" Enums(apple, google)
-// @Success 200 {object} server.CommonResponse
-// @Failure 400 {object} server.CommonResponse
+// @Success 200 {object} common.Response
+// @Failure 400 {object} common.Response
 // @Router /auth [post]
 func (ah *AuthHandler) VendorAuth() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		logrus.Info("dsafasjfosdfsda")
-		return ctx.SendString("sdjgajgwejgivqjweogvaoerhvqeirgaliergv")
+		return terrors.Raise(nil, 300000)
 	}
 }
 
@@ -39,9 +53,9 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 // @Tags Authorization
 // @Accept json
 // @Produce json
-// @Param email, password, first_name, last_name
-// @Success 200
-// @Failure 404
+// @Param data body model.SignUpRequest true "Authorization data from user"
+// @Success 200 {object} model.SignUpResponse
+// @Failure 404 {object} common.Response
 // @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -63,9 +77,9 @@ func (ah *AuthHandler) SignUp() fiber.Handler {
 // @Tags Authorization
 // @Accept json
 // @Produce json
-// @Param email, password
-// @Success 200
-// @Failure 404
+// @Param data body model.SignInRequest true "Authorization data from user"
+// @Success 200 {object} model.SignInResponse
+// @Failure 404 {object} common.Response
 // @Router /auth/sign/in [post]
 func (ah *AuthHandler) SignIn() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -87,9 +101,9 @@ func (ah *AuthHandler) SignIn() fiber.Handler {
 // @Tags Authorization
 // @Accept json
 // @Produce json
-// @Param code
-// @Success 200
-// @Failure 404
+// @Param code body model.EmailValidateRequest true "Data for validation by email from app"
+// @Success 200 {object} model.EmailValidateResponse
+// @Failure 404 {object} common.Response
 // @Router /auth/email/validate [post]
 func (ah *AuthHandler) ValidateEmail() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {

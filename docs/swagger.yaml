@@ -1,5 +1,65 @@
 definitions:
-  server.CommonResponse:
+  common.Response:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  model.EmailValidateRequest:
+    properties:
+      code:
+        type: integer
+    type: object
+  model.EmailValidateResponse:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
+      valid:
+        type: boolean
+    type: object
+  model.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.SignInResponse:
+    properties:
+      access_token:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  model.SignUpRequest:
+    properties:
+      email:
+        description: server.Params
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+    type: object
+  model.SignUpResponse:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
     type: object
 host: bank.onecrypto.pro
 info:
@@ -32,12 +92,91 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/server.CommonResponse'
+            $ref: '#/definitions/common.Response'
       summary: Sign in or sign up via Apple or Google
+      tags:
+      - Authorization
+  /auth/email/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validating user's email with take message on email and writing
+        code
+      parameters:
+      - description: Data for validation by email from app
+        in: body
+        name: code
+        required: true
+        schema:
+          $ref: '#/definitions/model.EmailValidateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.EmailValidateResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Validating user's email
+      tags:
+      - Authorization
+  /auth/sign/in:
+    post:
+      consumes:
+      - application/json
+      description: Authorization and get access token
+      parameters:
+      - description: Authorization data from user
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SignInResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign in
+      tags:
+      - Authorization
+  /auth/sign/up:
+    post:
+      consumes:
+      - application/json
+      description: Sign up with email and password
+      parameters:
+      - description: Authorization data from user
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SignUpResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign up with email
       tags:
       - Authorization
 schemes:

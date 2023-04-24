@@ -1,6 +1,7 @@
 package tsecure
 
 import (
+	"bank_api/config"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
@@ -10,8 +11,8 @@ import (
 )
 
 type RsaCrypto struct {
-	PublicKey  *rsa.PublicKey
-	PrivateKey *rsa.PrivateKey
+	publicKey  *rsa.PublicKey
+	privateKey *rsa.PrivateKey
 }
 
 func openRsaFile(path string) (key []byte, err error) {
@@ -37,16 +38,36 @@ func parseRsaPrivateKey(key []byte) (privateKey *rsa.PrivateKey, err error) {
 }
 
 func BuildRsaCrypto(ctn di.Container) (interface{}, error) {
+	cfg := ctn.Get("config").(*config.Config)
+	publicKeyRaw, err := openRsaFile(cfg.SecureConfig.RSA.PublicKey)
+	if err != nil {
+		return nil, err
+	}
+	publicKey, err := parseRsaPublicKey(publicKeyRaw)
+	if err != nil {
+		return nil, err
+	}
+	privateKeyRaw, err := openRsaFile(cfg.SecureConfig.RSA.PrivateKey)
+	if err != nil {
+		return nil, err
+	}
+	privateKey, err := parseRsaPrivateKey(privateKeyRaw)
+	if err != nil {
+		return nil, err
+	}
 
-	return nil, nil
+	return &RsaCrypto{
+		publicKey:  publicKey,
+		privateKey: privateKey,
+	}, nil
 }
 
 func (r *RsaCrypto) Encrypt(message string) (cipher string, err error) {
-	cipherRaw, err := rsa.EncryptOAEP(hashesMap[SHA256](), rand.Reader, r.PublicKey, []byte(message), nil)
+	cipherRaw, err := rsa.EncryptOAEP(hashesMap[SHA256](), rand.Reader, r.publicKey, []byte(message), nil)
 	return string(cipherRaw), err
 }
 
 func (r *RsaCrypto) Decrypt(cipher string) (message string, err error) {
-	//TODO implement me
-	panic("implement me")
+	messageRaw, err := rsa.DecryptOAEP(hashesMap[SHA256](), rand.Reader, r.privateKey, []byte(cipher), nil)
+	return string(messageRaw), err
 }

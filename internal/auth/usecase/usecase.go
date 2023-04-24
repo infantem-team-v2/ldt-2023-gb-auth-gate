@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"bank_api/internal/auth/model"
+	"bank_api/internal/pkg/common"
 	"bank_api/pkg/tlogger"
 	"github.com/sarulabs/di"
 	"math/rand"
@@ -21,7 +22,7 @@ func BuildAuthUsecase(ctn di.Container) (interface{}, error) {
 func (as *AuthUS) SignUp(params *model.SignUpRequest) (*model.SignUpResponse, error) {
 	as.logger.Infof("POST sign/up")
 	return &model.SignUpResponse{
-		StandardResponse: model.StandardResponse{
+		Response: common.Response{
 			Message:    "CREATED",
 			StatusCode: 201,
 		},
@@ -33,7 +34,7 @@ func (as *AuthUS) ValidateEmail(params *model.EmailValidateRequest) (*model.Emai
 	rand.Seed(time.Now().UnixNano())
 	valid := rand.Intn(2) == 1
 	return &model.EmailValidateResponse{
-		StandardResponse: model.StandardResponse{
+		Response: common.Response{
 			Message:    "SUCCESS",
 			StatusCode: 200,
 		},
@@ -44,7 +45,7 @@ func (as *AuthUS) ValidateEmail(params *model.EmailValidateRequest) (*model.Emai
 func (as *AuthUS) SignIn(params *model.SignInRequest) (*model.SignInResponse, error) {
 	as.logger.Infof("POST sig/in")
 	return &model.SignInResponse{
-		StandardResponse: model.StandardResponse{
+		Response: common.Response{
 			Message:    "SUCCESS",
 			StatusCode: 200,
 		},
