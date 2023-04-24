@@ -187,10 +187,10 @@ const docTemplate = `{
         "common.Response": {
             "type": "object",
             "properties": {
-                "message": {
+                "description": {
                     "type": "string"
                 },
-                "status_code": {
+                "internal_code": {
                     "type": "integer"
                 }
             }
@@ -206,10 +206,10 @@ const docTemplate = `{
         "model.EmailValidateResponse": {
             "type": "object",
             "properties": {
-                "message": {
+                "description": {
                     "type": "string"
                 },
-                "status_code": {
+                "internal_code": {
                     "type": "integer"
                 },
                 "valid": {
@@ -234,20 +234,20 @@ const docTemplate = `{
                 "access_token": {
                     "type": "string"
                 },
+                "description": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
                 "first_name": {
                     "type": "string"
                 },
+                "internal_code": {
+                    "type": "integer"
+                },
                 "last_name": {
                     "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "status_code": {
-                    "type": "integer"
                 }
             }
         },
@@ -272,10 +272,10 @@ const docTemplate = `{
         "model.SignUpResponse": {
             "type": "object",
             "properties": {
-                "message": {
+                "description": {
                     "type": "string"
                 },
-                "status_code": {
+                "internal_code": {
                     "type": "integer"
                 }
             }

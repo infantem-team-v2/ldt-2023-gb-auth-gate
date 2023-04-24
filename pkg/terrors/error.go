@@ -20,7 +20,7 @@ type tError struct {
 	externalMessage *externalMessage
 }
 
-// Init cache with errors' external messages to have fast way to get information about them
+// Init cache errors' external messages to have fast way to get information about them
 func Init() {
 	workDir, err := os.Getwd()
 	if err != nil {
@@ -95,8 +95,9 @@ func stacktraceToString(st *xruntime.StackTrace, doNewLine bool) (serializedFram
 }
 
 func (e *tError) Error() string {
-
-	return ""
+	return fmt.Sprintf(errorMessage,
+		e.internalError.Error(),
+		stacktraceToString(e.stackTrace, true))
 }
 
 func (e *tError) LoggerMessage() string {

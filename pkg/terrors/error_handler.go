@@ -21,16 +21,22 @@ func BuildErrorHandler(ctn di.Container) (interface{}, error) {
 func (heh *HttpErrorHandler) Handle(ctx *fiber.Ctx, err error) error {
 	if tErr, ok := err.(*tError); ok {
 		heh.logger.ErrorFull(tErr)
-		return ctx.Status(tErr.statusCode).JSON(tErr.externalMessage)
+		return ctx.
+			Status(tErr.statusCode).
+			JSON(tErr.externalMessage)
 	}
 	if strings.Contains(err.Error(), "Cannot") {
-		return ctx.Status(404).JSON(common.Response{
-			StatusCode: 404,
-			Message:    err.Error(),
-		})
+		return ctx.
+			Status(404).
+			JSON(common.Response{
+				InternalCode: 404,
+				Message:      err.Error(),
+			})
 	}
-	return ctx.Status(500).JSON(common.Response{
-		StatusCode: 500,
-		Message:    err.Error(),
-	})
+	return ctx.
+		Status(500).
+		JSON(common.Response{
+			InternalCode: 500,
+			Message:      err.Error(),
+		})
 }

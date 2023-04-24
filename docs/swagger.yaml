@@ -1,9 +1,9 @@
 definitions:
   common.Response:
     properties:
-      message:
+      description:
         type: string
-      status_code:
+      internal_code:
         type: integer
     type: object
   model.EmailValidateRequest:
@@ -13,9 +13,9 @@ definitions:
     type: object
   model.EmailValidateResponse:
     properties:
-      message:
+      description:
         type: string
-      status_code:
+      internal_code:
         type: integer
       valid:
         type: boolean
@@ -31,16 +31,16 @@ definitions:
     properties:
       access_token:
         type: string
+      description:
+        type: string
       email:
         type: string
       first_name:
         type: string
+      internal_code:
+        type: integer
       last_name:
         type: string
-      message:
-        type: string
-      status_code:
-        type: integer
     type: object
   model.SignUpRequest:
     properties:
@@ -56,9 +56,9 @@ definitions:
     type: object
   model.SignUpResponse:
     properties:
-      message:
+      description:
         type: string
-      status_code:
+      internal_code:
         type: integer
     type: object
 host: bank.onecrypto.pro

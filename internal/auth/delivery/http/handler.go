@@ -6,7 +6,6 @@ import (
 	"bank_api/pkg/terrors"
 	"bank_api/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 )
 
 type AuthHandler struct {
@@ -42,7 +41,6 @@ func NewAuthHandler(app *fiber.App) server.IHandler {
 // @Router /auth [post]
 func (ah *AuthHandler) VendorAuth() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		logrus.Info("dsafasjfosdfsda")
 		return terrors.Raise(nil, 300000)
 	}
 }
