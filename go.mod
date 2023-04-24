@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Shopify/sarama v1.38.1
-	github.com/carlware/promtail-go v0.0.1
+	github.com/afiskon/promtail-client v0.0.0-20190305142237-506f3f921e9c
 	github.com/fernet/fernet-go v0.0.0-20211208181803-9f70042a33ee
 	github.com/fiorix/go-redis v0.0.0-20160104010333-d987058b55eb
 	github.com/gofiber/fiber/v2 v2.44.0

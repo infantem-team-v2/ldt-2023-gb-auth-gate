@@ -6,7 +6,7 @@ type LoggerMessenger interface {
 
 type ILogger interface {
 	// sendLog Send log to remote logs storage
-	sendLog(msg string)
+	sendLog(msg string, level LogLevel)
 
 	// Default logger methods
 	Infof(msgf string, args ...interface{})

@@ -12,6 +12,6 @@ var (
 
 	externalMessagesMap = map[uint32]*serializedExternalMessage{}
 
-	labels       = "statusCode=%d internalCode=%d externalMessage=%s internalError=%s stackTrace=%s"
+	labels       = "source=%s job=error_logging statusCode=%d internalCode=%d externalMessage=%s internalError=%s stackTrace=%s"
 	errorMessage = "Error: %s | StackTrace:\n%s\n"
 )
