@@ -17,4 +17,4 @@
 # 3xxxxx our internal problem
 300000:
   message: unknown error inside system
-  statusCode: 500
+  statusC100000ode: 500

@@ -1,82 +1,118 @@
 package kafka
 
 import (
-	dconfig "bank_api/pkg/damqp/config"
+	"bank_api/config"
+	"bank_api/pkg/tlogger"
 	"context"
 	"fmt"
 	"github.com/Shopify/sarama"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
+	"github.com/sarulabs/di"
 )
 
 type Kafka struct {
-	cfg    *dconfig.BrokerConfig
-	client sarama.Client
+	cfg    config.Config
+	logger tlogger.ILogger
 }
 
-func (k Kafka) InitKafka() error {
-	config := sarama.NewConfig()
-	brokers := []string{fmt.Sprintf("%s:%s", k.cfg.Kafka.Host, k.cfg.Kafka.Port)}
+func BuildKafka(ctn di.Container) (interface{}, error) {
+	return &Kafka{
+		cfg:    ctn.Get("config").(config.Config),
+		logger: ctn.Get("logger").(tlogger.ILogger),
+	}, nil
+}
 
+type MessageHandler struct{}
+
+// Реализация интерфейса sarama.ConsumerGroupHandler для обработки сообщений Kafka
+func (h *MessageHandler) Setup(_ sarama.ConsumerGroupSession) error   { return nil }
+func (h *MessageHandler) Cleanup(_ sarama.ConsumerGroupSession) error { return nil }
+
+func (k Kafka) Consume(brokers []string, topic string, groupID string) error {
+	// Создаем конфигурацию для потребителя Kafka
+	config := sarama.NewConfig()
+
+	// Устанавливаем начальное смещение на более старое сообщение
+	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+
+	// Создаем клиент Kafka
 	client, err := sarama.NewClient(brokers, config)
 	if err != nil {
-		log.Fatalf("Cant't creating kafka client: %s", err)
+		return fmt.Errorf("failed to create Kafka client: %w", err)
 	}
-	defer func() {
-		if err = client.Close(); err != nil {
-			log.Fatalf("Cant't closing kafka client: %s", err)
+
+	// Создаем группу потребителей Kafka
+	consumerGroup, err := sarama.NewConsumerGroupFromClient(groupID, client)
+	if err != nil {
+		return fmt.Errorf("failed to create Kafka consumer group: %w", err)
+	}
+
+	// Запускаем обработчик сообщений Kafka
+	messageHandler := &MessageHandler{}
+	ctx := context.Background()
+	for {
+		if err := consumerGroup.Consume(ctx, []string{topic}, messageHandler); err != nil {
+			return fmt.Errorf("failed to consume from Kafka: %w", err)
 		}
-	}()
+		if ctx.Err() != nil {
+			return ctx.Err()
+		}
+	}
+}
+
+func (h *MessageHandler) ConsumeClaim(sess sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
+	for message := range claim.Messages() {
+		// Обработка сообщения
+		fmt.Printf("Consumed message: topic=%s partition=%d offset=%d value=%s\n",
+			message.Topic, message.Partition, message.Offset, string(message.Value))
+
+		// Отмечаем сообщение как обработанное
+		sess.MarkMessage(message, "")
+	}
 	return nil
 }
 
-func (k Kafka) Consume(topic string, groupID string) {
+func (k Kafka) Publish(brokers []string, topic string, message string) error {
+	// Создаем конфигурацию для производителя Kafka
 	config := sarama.NewConfig()
-	config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin
-	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	// Устанавливаем подтверждение доставки сообщений
+	config.Producer.RequiredAcks = sarama.WaitForAll
 
-	consumer, err := sarama.NewConsumerGroupFromClient(groupID, k.client)
+	// Создаем клиент Kafka
+	client, err := sarama.NewClient(brokers, config)
 	if err != nil {
-		log.Fatalf("Can't create consumer kafka: %s", err)
+		return fmt.Errorf("failed to create Kafka client: %w", err)
 	}
-	var handler sarama.ConsumerGroupHandler
-	go func() {
-		for {
-			if err = consumer.Consume(context.Background(), []string{topic}, handler); err != nil {
-				log.Fatalf("Error with runnig kafka consumer: %s", err)
-			}
+	defer func() {
+		if err = client.Close(); err != nil {
+			k.logger.Errorf("failed to close Kafka client: ", err)
 		}
 	}()
-	sigterm := make(chan os.Signal, 1)
-	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)
-	<-sigterm
-	if err = consumer.Close(); err != nil {
-		log.Fatalf("Error with closing consumer kafka: %s", err)
-	}
-}
 
-func (k Kafka) Publish(topic string, message string) error {
+	// Создаем производителя Kafka
+	producer, err := sarama.NewAsyncProducerFromClient(client)
+	if err != nil {
+		return fmt.Errorf("failed to create Kafka producer: %w", err)
+	}
+	defer func() {
+		if err = producer.Close(); err != nil {
+			k.logger.Errorf("failed to close Kafka producer:", err)
+		}
+	}()
+
+	// Создаем сообщение Kafka
 	msg := &sarama.ProducerMessage{
 		Topic: topic,
 		Value: sarama.StringEncoder(message),
 	}
-	producer, err := sarama.NewSyncProducerFromClient(k.client)
-	if err != nil {
-		log.Fatalf("Error with creating kafka producer: %s", err)
-		return err
+
+	// Отправляем сообщение в Kafka
+	producer.Input() <- msg
+
+	// Обрабатываем ошибки при отправке сообщения
+	select {
+	case <-producer.Successes():
+		return nil
+	case err = <-producer.Errors():
+		return fmt.Errorf("failed to publish message to Kafka: %w", err)
 	}
-	defer func() {
-		if err != nil {
-			log.Printf("Error with closing SyncProducer: %s", err)
-		}
-	}()
-	partition, offset, err := producer.SendMessage(msg)
-	if err != nil {
-		log.Fatalf("Error with send message kafka: %s", err)
-		return err
-	}
-	log.Printf("Message sended in topic: %s, partition: %d, offset: %d", topic, partition, offset)
-	return nil
 }

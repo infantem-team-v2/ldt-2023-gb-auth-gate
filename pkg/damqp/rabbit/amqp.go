@@ -25,21 +25,6 @@ func BuildRabbitMQ(ctn di.Container) (interface{}, error) {
 	}, nil
 }
 
-//func InitRabbitMQ(cfg *dconfig.BrokerConfig) (*amqp.Connection, error) {
-//	amqpUrl := fmt.Sprintf("amqp://%s:%s@rabbitmq-%s:%s/",
-//		cfg.RabbitMQ.UserName,
-//		cfg.RabbitMQ.Password,
-//		cfg.RabbitMQ.Host,
-//		cfg.RabbitMQ.Port,
-//	)
-//	conn, err := amqp.Dial(amqpUrl)
-//	if err != nil {
-//		amqp.Logger.Printf("Error with connection to RabbitMQ", err)
-//		return nil, err
-//	}
-//	return conn, nil
-//}
-
 func (c ConsumerMQ) StartingConsumeMQ(queueName string, consumeFunc func(d []byte) error) error {
 	var queueMap = map[string]string{
 		"example": fmt.Sprintf("amqp://%s:%s@rabbitmq-%s:%s/",
