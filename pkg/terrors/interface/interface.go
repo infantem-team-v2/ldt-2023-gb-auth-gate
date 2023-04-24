@@ -1,4 +1,4 @@
-package terrors
+package _interface
 
 type IError interface {
 	LoggerMessage() string

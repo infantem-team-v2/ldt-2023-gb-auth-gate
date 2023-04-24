@@ -2,7 +2,7 @@ package tlogger
 
 import (
 	"bank_api/config"
-	"bank_api/pkg/terrors"
+	"bank_api/pkg/terrors/interface"
 	"fmt"
 	"github.com/afiskon/promtail-client/promtail"
 	"github.com/sarulabs/di"
@@ -86,7 +86,7 @@ func (T *TLogger) Errorf(msgf string, args ...interface{}) {
 }
 
 func (T *TLogger) ErrorFull(err error) {
-	if tErr, ok := err.(terrors.IError); ok {
+	if tErr, ok := err.(_interface.IError); ok {
 		go T.sendLog(tErr.LoggerMessage(),
 			ERROR)
 	} else {

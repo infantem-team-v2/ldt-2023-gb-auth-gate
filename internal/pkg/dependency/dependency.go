@@ -9,7 +9,7 @@ import (
 
 // importDependencies Method that imports dependencies from outer source
 func (tdc *TDependencyContainer) importDependencies() {
-	// for now we will import dependencies from constant map w/ name : builder func
+	// for now, we will import dependencies from constant map w/ name : builder func
 	tdc.dependencies = dependencyMap
 
 }

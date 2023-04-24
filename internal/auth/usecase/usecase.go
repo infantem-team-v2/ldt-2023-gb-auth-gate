@@ -23,8 +23,8 @@ func (as *AuthUS) SignUp(params *model.SignUpRequest) (*model.SignUpResponse, er
 	as.logger.Infof("POST sign/up")
 	return &model.SignUpResponse{
 		Response: common.Response{
-			Message:    "CREATED",
-			StatusCode: 201,
+			Message:      "CREATED",
+			InternalCode: 201,
 		},
 	}, nil
 }
@@ -35,19 +35,19 @@ func (as *AuthUS) ValidateEmail(params *model.EmailValidateRequest) (*model.Emai
 	valid := rand.Intn(2) == 1
 	return &model.EmailValidateResponse{
 		Response: common.Response{
-			Message:    "SUCCESS",
-			StatusCode: 200,
+			Message:      "SUCCESS",
+			InternalCode: 200,
 		},
 		Valid: valid,
 	}, nil
 }
 
 func (as *AuthUS) SignIn(params *model.SignInRequest) (*model.SignInResponse, error) {
-	as.logger.Infof("POST sig/in")
+	as.logger.Infof("POST sign/in")
 	return &model.SignInResponse{
 		Response: common.Response{
-			Message:    "SUCCESS",
-			StatusCode: 200,
+			Message:      "SUCCESS",
+			InternalCode: 200,
 		},
 		AccessToken: "access_token",
 	}, nil

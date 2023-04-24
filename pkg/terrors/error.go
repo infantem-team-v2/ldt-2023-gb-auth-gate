@@ -1,6 +1,7 @@
 package terrors
 
 import (
+	"bank_api/pkg/terrors/interface"
 	"bank_api/pkg/xruntime"
 	"fmt"
 	"github.com/pkg/errors"
@@ -66,7 +67,7 @@ func Raise(err error, internalCode uint32) error {
 	}
 	tErr := &tError{
 		internalError: err,
-		stackTrace:    xruntime.NewFrame(2),
+		stackTrace:    xruntime.NewFrame(1),
 
 		statusCode:      statusCode,
 		externalMessage: extMsg,
@@ -75,7 +76,7 @@ func Raise(err error, internalCode uint32) error {
 	return tErr
 }
 
-func (e *tError) Wrap(err IError) IError {
+func (e *tError) Wrap(err _interface.IError) _interface.IError {
 	if tErr, ok := err.(*tError); ok {
 		e.internalError = errors.Wrap(tErr.internalError, fmt.Sprintf("%s", e.internalError.Error()))
 	}

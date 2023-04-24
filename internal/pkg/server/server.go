@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	mwLogger "github.com/gofiber/fiber/v2/middleware/logger"
 	mwRecover "github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/swagger"
 	"os"
 )
@@ -53,6 +54,9 @@ func (s *Server) MapHandlers() *Server {
 		StackTraceHandler: sh.Handle,
 	}))
 
+	s.App.Use(requestid.New(requestid.Config{
+		Header: "T-REQUEST-ID",
+	}))
 	// Logging fiber's info about requests
 	s.App.Use(mwLogger.New(mwLogger.Config{
 		Output: os.Stdout,
