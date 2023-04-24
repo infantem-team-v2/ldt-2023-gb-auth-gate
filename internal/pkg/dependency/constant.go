@@ -3,6 +3,7 @@ package dependency
 import (
 	"bank_api/config"
 	"bank_api/internal/auth/usecase"
+	"bank_api/pkg/damqp/rabbit"
 	"bank_api/pkg/terrors"
 	"bank_api/pkg/thttp"
 	"bank_api/pkg/thttp/server"
@@ -20,6 +21,7 @@ var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"stacktraceHandler": terrors.BuildStacktraceHandler,
 	"app":               server.BuildFiberApp,
 	"authUC":            usecase.BuildAuthUsecase,
+	"rabbit":            rabbit.BuildRabbitMQ,
 }
 
 const TagDI = "di"

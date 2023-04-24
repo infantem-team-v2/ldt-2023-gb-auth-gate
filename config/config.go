@@ -19,7 +19,7 @@ type Config struct {
 	LoggerConfig  tloggerConfig.TLoggerConfig
 	SecureConfig  tsecureConfig.TSecureConfig
 	StorageConfig tstorageConfig.TStorageConfig
-	AmqpConfig    dconfig.AmqpConfig
+	AmqpConfig    dconfig.BrokerConfig
 }
 
 func NewConfig() *Config {
@@ -38,10 +38,6 @@ func NewConfig() *Config {
 func BuildConfig(ctn di.Container) (interface{}, error) {
 	return NewConfig(), nil
 }
-
-//func (c *Config) ParseConfig() error {
-//	return nil
-//}
 
 func loadConfig() (*viper.Viper, error) {
 	v := viper.New()
