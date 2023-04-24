@@ -30,6 +30,7 @@ func NewServer() *Server {
 		container: ctn,
 	}
 	ctn.Inject(s)
+	terrors.Init()
 	return s
 }
 

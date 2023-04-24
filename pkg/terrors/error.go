@@ -26,7 +26,7 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
-	fErr, err := os.Open(fmt.Sprintf("%s/test/errors.yaml", workDir))
+	fErr, err := os.Open(fmt.Sprintf("%s/http/errors.yaml", workDir))
 	if err != nil {
 		panic(err)
 	}
@@ -55,7 +55,8 @@ func getExternalMessage(internalCode uint32) (extMsg *externalMessage, code int,
 	}, serExtMsg.StatusCode, nil
 }
 
-func Raise(err error, internalCode uint32) IError {
+// Raise new error w/ error (not necessary) and our internal code of error which will be handled in our HttpErrorHandler
+func Raise(err error, internalCode uint32) error {
 	extMsg, statusCode, iErr := getExternalMessage(internalCode)
 	if err == nil {
 		err = errors.New(extMsg.Description)

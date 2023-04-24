@@ -39,24 +39,23 @@ func (T *TLogger) sendLog(msg string) {
 }
 
 func (T *TLogger) Infof(msgf string, args ...interface{}) {
-	T.log(logrus.InfoLevel, msgf, args)
+	T.log(logrus.InfoLevel, msgf, args...)
 }
 
 func (T *TLogger) Debugf(msgf string, args ...interface{}) {
-	T.log(logrus.DebugLevel, msgf, args)
+	T.log(logrus.DebugLevel, msgf, args...)
 }
 
 func (T *TLogger) Warnf(msgf string, args ...interface{}) {
-	T.log(logrus.WarnLevel, msgf, args)
+	T.log(logrus.WarnLevel, msgf, args...)
 }
 
 func (T *TLogger) Errorf(msgf string, args ...interface{}) {
-	T.log(logrus.ErrorLevel, msgf, args)
+	T.log(logrus.ErrorLevel, msgf, args...)
 }
 
 func (T *TLogger) ErrorFull(err error) {
-	//TODO implement me
-	panic("implement me")
+	T.Errorf("Error: %s", err.Error())
 }
 
 // Write implementing for putting it into fiber logger
