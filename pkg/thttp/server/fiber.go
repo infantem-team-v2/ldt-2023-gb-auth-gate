@@ -13,7 +13,7 @@ func BuildFiberApp(ctn di.Container) (interface{}, error) {
 	errorHandler := ctn.Get("errorHandler").(*terrors.HttpErrorHandler)
 	return fiber.New(fiber.Config{
 		AppName:               cfg.BaseConfig.Service.Name,
-		DisableStartupMessage: false,
+		DisableStartupMessage: true,
 		//Prefork:               true,
 		ErrorHandler: errorHandler.Handle,
 		WriteTimeout: time.Duration(cfg.HttpConfig.TimeOut) * time.Second,

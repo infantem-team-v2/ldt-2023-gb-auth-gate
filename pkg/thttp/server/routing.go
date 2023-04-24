@@ -34,7 +34,6 @@ func MapRoutes(h IHandler) {
 			continue
 		}
 		fStruct := hMapping[fHandler.Name]
-		fmt.Println(fHandler.Func.Type())
 		fRes := fHandler.Func
 		//if !ok {
 		//	panic(fmt.Errorf("can't map method %s. it doesn't implement fiber.Handler", fHandler.Name))
