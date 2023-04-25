@@ -20,7 +20,6 @@ func BuildStacktraceHandler(ctn di.Container) (interface{}, error) {
 
 func (sh *StacktraceHandler) Handle(c *fiber.Ctx, e interface{}) {
 	if err, ok := e.(error); ok {
-		sh.logger.ErrorFull(err)
 		sh.errorHandler.Handle(c, err)
 	} else {
 		sh.logger.Errorf("Panic: %v", e)

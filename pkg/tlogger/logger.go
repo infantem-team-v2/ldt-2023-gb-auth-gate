@@ -85,13 +85,16 @@ func (T *TLogger) Errorf(msgf string, args ...interface{}) {
 	T.log(logrus.ErrorLevel, msgf, args...)
 }
 
-func (T *TLogger) ErrorFull(err error) {
+func (T *TLogger) ErrorFull(err error, requestId string) {
 	if tErr, ok := err.(_interface.IError); ok {
-		go T.sendLog(tErr.LoggerMessage(),
+		go T.sendLog(fmt.Sprintf("source=%s %s requestId=%s",
+			T.Config.BaseConfig.Service.Name,
+			tErr.LoggerMessage(), requestId),
 			ERROR)
 	} else {
 		go T.sendLog(fmt.Sprintf(labels,
-			T.Config.BaseConfig.Service.Name, 500, err.Error()),
+			T.Config.BaseConfig.Service.Name,
+			500, err.Error(), requestId),
 			ERROR)
 	}
 	T.Errorf("Error: %s", err.Error())

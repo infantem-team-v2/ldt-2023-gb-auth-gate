@@ -2,6 +2,7 @@ package terrors
 
 import (
 	"bank_api/internal/pkg/common"
+	"bank_api/pkg/thttp"
 	"bank_api/pkg/tlogger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
@@ -20,7 +21,8 @@ func BuildErrorHandler(ctn di.Container) (interface{}, error) {
 
 func (heh *HttpErrorHandler) Handle(ctx *fiber.Ctx, err error) error {
 	if tErr, ok := err.(*tError); ok {
-		heh.logger.ErrorFull(tErr)
+		requestId := ctx.GetRespHeader(thttp.RequestIdHeader, "no-header-provided")
+		heh.logger.ErrorFull(tErr, requestId)
 		return ctx.
 			Status(tErr.statusCode).
 			JSON(tErr.externalMessage)

@@ -1,6 +1,7 @@
 package config
 
 import (
+	mdwModel "bank_api/internal/pkg/middleware/model"
 	"bank_api/pkg/damqp/config"
 	"bank_api/pkg/tconfig"
 	thttpConfig "bank_api/pkg/thttp/config"
@@ -14,12 +15,13 @@ import (
 )
 
 type Config struct {
-	BaseConfig    tconfig.BaseConfig
-	HttpConfig    thttpConfig.ThttpConfig
-	LoggerConfig  tloggerConfig.TLoggerConfig
-	SecureConfig  tsecureConfig.TSecureConfig
-	StorageConfig tstorageConfig.TStorageConfig
-	AmqpConfig    dconfig.BrokerConfig
+	BaseConfig       tconfig.BaseConfig
+	HttpConfig       thttpConfig.ThttpConfig
+	LoggerConfig     tloggerConfig.TLoggerConfig
+	SecureConfig     tsecureConfig.TSecureConfig
+	StorageConfig    tstorageConfig.TStorageConfig
+	AmqpConfig       dconfig.BrokerConfig
+	MiddlewareConfig mdwModel.MiddlewareConfig
 }
 
 func NewConfig() *Config {

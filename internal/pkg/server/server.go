@@ -5,6 +5,7 @@ import (
 	_ "bank_api/docs"
 	"bank_api/internal/pkg/dependency"
 	"bank_api/pkg/terrors"
+	"bank_api/pkg/thttp"
 	"bank_api/pkg/thttp/server"
 	"bank_api/pkg/tlogger"
 	"fmt"
@@ -26,7 +27,10 @@ type Server struct {
 // NewServer (Fabric) Builds server with DI container which contains main pkg Singletons,
 // which we use to build other entities
 func NewServer() *Server {
-	ctn := dependency.NewDependencyContainer().BuildDependencies().BuildContainer()
+	ctn := dependency.
+		NewDependencyContainer().
+		BuildDependencies().
+		BuildContainer()
 	s := &Server{
 		container: ctn,
 	}
@@ -46,7 +50,8 @@ func (s *Server) mapHandlers() {
 // MapHandlers with middlewares and routers
 func (s *Server) MapHandlers() *Server {
 	// Getting dependencies from container
-	sh := s.container.ContainerInstance().Get("stacktraceHandler").(*terrors.StacktraceHandler)
+	sh := s.container.ContainerInstance().
+		Get("stacktraceHandler").(*terrors.StacktraceHandler)
 
 	// Make recover on top of app's stack
 	s.App.Use(mwRecover.New(mwRecover.Config{
@@ -55,11 +60,13 @@ func (s *Server) MapHandlers() *Server {
 	}))
 
 	s.App.Use(requestid.New(requestid.Config{
-		Header: "T-REQUEST-ID",
+		Header: thttp.RequestIdHeader,
 	}))
 	// Logging fiber's info about requests
 	s.App.Use(mwLogger.New(mwLogger.Config{
 		Output: os.Stdout,
+		Format: fmt.Sprintf("${time} | ${magenta} [${respHeader:%s] ${white} | ${latency} | ${status} - ${method} ${path}\n",
+			thttp.RequestIdHeader),
 	}))
 
 	// Swagger docs on /docs

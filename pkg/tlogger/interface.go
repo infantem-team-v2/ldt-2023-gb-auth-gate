@@ -14,5 +14,5 @@ type ILogger interface {
 	Warnf(msgf string, args ...interface{})
 	Errorf(msgf string, args ...interface{})
 	// ErrorFull Logging error w/ stacktrace
-	ErrorFull(err error)
+	ErrorFull(err error, requestId string)
 }

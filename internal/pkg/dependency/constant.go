@@ -3,6 +3,7 @@ package dependency
 import (
 	"bank_api/config"
 	"bank_api/internal/auth/usecase"
+	mdwHttp "bank_api/internal/pkg/middleware/delivery/http"
 	"bank_api/pkg/damqp/kafka"
 	"bank_api/pkg/damqp/rabbit"
 	"bank_api/pkg/terrors"
@@ -18,6 +19,7 @@ var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"postgres":          tstorageRelational.BuildPostgres,
 	"httpClient":        thttp.BuildHttpClient,
 	"logger":            tlogger.BuildLogger,
+	"middleware":        mdwHttp.BuildMiddlewareManager,
 	"errorHandler":      terrors.BuildErrorHandler,
 	"stacktraceHandler": terrors.BuildStacktraceHandler,
 	"app":               server.BuildFiberApp,

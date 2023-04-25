@@ -2,6 +2,7 @@ package main
 
 import (
 	"bank_api/internal/pkg/server"
+	"fmt"
 )
 
 // @title CryptoBank API
@@ -29,7 +30,10 @@ import (
 // @name TimeStamp
 // @description TimeStamp
 func main() {
-	if err := server.NewServer().MapHandlers().Run(); err != nil {
-		panic("can't start server")
+	if err := server.
+		NewServer().
+		MapHandlers().
+		Run(); err != nil {
+		panic(fmt.Sprintf("can't start server %+v", err))
 	}
 }
