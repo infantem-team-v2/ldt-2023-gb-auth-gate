@@ -9,6 +9,7 @@ import (
 	"bank_api/pkg/thttp/server"
 	"bank_api/pkg/tlogger"
 	"fmt"
+	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	mwLogger "github.com/gofiber/fiber/v2/middleware/logger"
 	mwRecover "github.com/gofiber/fiber/v2/middleware/recover"
@@ -71,7 +72,13 @@ func (s *Server) MapHandlers() *Server {
 
 	// Swagger docs on /docs
 	s.App.Get("/docs/*", swagger.HandlerDefault)
+	pmth := fiberprometheus.NewWith(
+		s.Config.BaseConfig.Service.Name,
+		"PROD", "API")
 
+	// Prometheus for fiber app metrics
+	pmth.RegisterAt(s.App, "/metrics")
+	s.App.Use(pmth.Middleware)
 	//ah.SetRoutes()
 	s.mapHandlers()
 	return s

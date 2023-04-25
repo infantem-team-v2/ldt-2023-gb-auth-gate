@@ -5,10 +5,11 @@ go 1.18
 require (
 	github.com/Shopify/sarama v1.38.1
 	github.com/afiskon/promtail-client v0.0.0-20190305142237-506f3f921e9c
-	github.com/confluentinc/confluent-kafka-go v1.9.2
+	github.com/ansrivas/fiberprometheus/v2 v2.6.0
 	github.com/fernet/fernet-go v0.0.0-20211208181803-9f70042a33ee
 	github.com/fiorix/go-redis v0.0.0-20160104010333-d987058b55eb
 	github.com/gofiber/fiber/v2 v2.44.0
+	github.com/gofiber/storage/redis/v2 v2.0.0
 	github.com/gofiber/swagger v0.1.11
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/jackc/pgx v3.6.2+incompatible
@@ -45,7 +46,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
-	github.com/gofiber/storage/redis/v2 v2.0.0 // indirect
+	github.com/gofiber/adaptor/v2 v2.1.31 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.3.0 // indirect
@@ -78,6 +79,7 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/redis/go-redis/v9 v9.0.3 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/savsgio/dictpool v0.0.0-20221023140959-7bf2e61cea94 // indirect
 	github.com/savsgio/gotils v0.0.0-20230208104028-c358bd845dee // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect

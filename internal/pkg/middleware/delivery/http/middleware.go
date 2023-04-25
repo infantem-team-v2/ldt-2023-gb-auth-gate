@@ -20,7 +20,6 @@ type MiddlewareManager struct {
 func BuildMiddlewareManager(ctn di.Container) (interface{}, error) {
 	cfg := ctn.Get("config").(*config.Config)
 	logger := ctn.Get("logger").(tlogger.ILogger)
-
 	s := session.New(session.Config{
 		CookieHTTPOnly: true,
 		Storage: redis.New(redis.Config{

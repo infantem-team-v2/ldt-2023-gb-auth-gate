@@ -15,10 +15,10 @@ HttpConfig:
 
 LoggerConfig:
   Loki:
-    host: "164.92.132.222"
+    host: "164.90.189.161"
     port: "3111"
-    user: "doadmin"
-    password: "12345678"
+    user: ""
+    password: ""
 
 SecureConfig:
   Fernet:
