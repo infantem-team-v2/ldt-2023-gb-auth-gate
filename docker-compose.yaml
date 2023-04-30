@@ -48,3 +48,13 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - ${POSTGRES_DATA_VOLUME}:/var/lib/postgresql/data/pgdata
+
+  redis:
+    container_name: bank-redis
+
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+
+    environment:
+      -

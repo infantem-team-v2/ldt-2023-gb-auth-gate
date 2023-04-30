@@ -64,11 +64,11 @@ definitions:
 host: bank.onecrypto.pro
 info:
   contact:
-    email: bwg.it317@gmail.com
+    email: KlenoviySir@yandex.ru
     name: Docs developer
-    url: https://t.me/sirop_work
+    url: https://t.me/KlenoviySirop
   description: TimeStamp
-  title: CryptoBank API
+  title: GO Fiber Structure Template
   version: 1.0.0
 paths:
   /auth:

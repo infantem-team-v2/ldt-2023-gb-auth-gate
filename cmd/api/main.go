@@ -5,12 +5,12 @@ import (
 	"fmt"
 )
 
-// @title CryptoBank API
-// @description Core backend specification for B2C app
+// @title GO Fiber Structure Template
+// @description Simple structure template for web-application w/ Fiber, DI, Postgres, Redis etc.
 // @version 1.0.0
 // @contact.name Docs developer
-// @contact.url https://t.me/sirop_work
-// @contact.email bwg.it317@gmail.com
+// @contact.url https://t.me/KlenoviySirop
+// @contact.email KlenoviySir@yandex.ru
 
 // @host bank.onecrypto.pro
 // @schemes https

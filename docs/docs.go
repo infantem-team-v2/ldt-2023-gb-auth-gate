@@ -12,8 +12,8 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Docs developer",
-            "url": "https://t.me/sirop_work",
-            "email": "bwg.it317@gmail.com"
+            "url": "https://t.me/KlenoviySirop",
+            "email": "KlenoviySir@yandex.ru"
         },
         "version": "{{.Version}}"
     },
@@ -289,7 +289,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "bank.onecrypto.pro",
 	BasePath:         "",
 	Schemes:          []string{"https"},
-	Title:            "CryptoBank API",
+	Title:            "GO Fiber Structure Template",
 	Description:      "TimeStamp",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
