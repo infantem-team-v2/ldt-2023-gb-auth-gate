@@ -4,8 +4,8 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "TimeStamp",
-        "title": "GO Fiber Structure Template",
+        "description": "JWT token in authorization bearer",
+        "title": "Core backend app for Leaders of Digital Transformation",
         "contact": {
             "name": "Docs developer",
             "url": "https://t.me/KlenoviySirop",
@@ -13,7 +13,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "bank.onecrypto.pro",
+    "host": "core.ldt2023.infantem.tech",
     "paths": {
         "/auth": {
             "post": {

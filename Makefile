@@ -19,6 +19,11 @@ start:
 	echo "build and starting docker-compose with detach..."
 	docker-compose up -d --build
 
+start_production:
+	echo "starting production version"
+	first_init
+	docker-compose up -d --build api
+
 update:
 	echo "updating project..."
 	echo "pulling changes from git"
@@ -26,7 +31,7 @@ update:
 	echo "updating documentation..."
 	docs_init
 	echo "build and starting docker-compose with detach..."
-	docker-compose up -d --build api
+	docker-compose up -d --build --no-deps api
 
 restart:
 	echo "restarting docker-compose"

@@ -61,14 +61,14 @@ definitions:
       internal_code:
         type: integer
     type: object
-host: bank.onecrypto.pro
+host: core.ldt2023.infantem.tech
 info:
   contact:
     email: KlenoviySir@yandex.ru
     name: Docs developer
     url: https://t.me/KlenoviySirop
-  description: TimeStamp
-  title: GO Fiber Structure Template
+  description: JWT token in authorization bearer
+  title: Core backend app for Leaders of Digital Transformation
   version: 1.0.0
 paths:
   /auth:

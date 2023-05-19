@@ -5,30 +5,21 @@ import (
 	"fmt"
 )
 
-// @title GO Fiber Structure Template
-// @description Simple structure template for web-application w/ Fiber, DI, Postgres, Redis etc.
+// @title Core backend app for Leaders of Digital Transformation
+// @description Main service that works with each other and summarizing data
 // @version 1.0.0
 // @contact.name Docs developer
 // @contact.url https://t.me/KlenoviySirop
 // @contact.email KlenoviySir@yandex.ru
 
-// @host bank.onecrypto.pro
+// @host core.ldt2023.infantem.tech
 // @schemes https
 
-// @securityDefinitions ApiPublic
+// @securityDefinitions AuthJWT
 // @in header
-// @name ApiPublic
-// @description Api public key
+// @name Authorization
+// @description JWT token in authorization bearer
 
-// @securityDefinitions Signature
-// @in header
-// @name Signature
-// @description Signature calculated by the private key
-
-// @securityDefinitions TimeStamp
-// @in header
-// @name TimeStamp
-// @description TimeStamp
 func main() {
 	if err := server.
 		NewServer().
