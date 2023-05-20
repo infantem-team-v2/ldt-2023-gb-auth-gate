@@ -1,4 +1,4 @@
-module bank_api
+module gb-auth-gate
 
 go 1.20
 

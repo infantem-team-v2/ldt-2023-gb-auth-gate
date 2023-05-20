@@ -6,6 +6,23 @@ definitions:
       internal_code:
         type: integer
     type: object
+  model.BusinessDataLogic:
+    properties:
+      economic_activity:
+        example: Производство
+        type: string
+      inn:
+        example: "7707083893"
+        type: string
+      name:
+        example: ООО ИНФАНТЕМ
+        type: string
+      website:
+        example: infantem.tech
+        type: string
+    required:
+    - inn
+    type: object
   model.EmailValidateRequest:
     properties:
       code:
@@ -19,6 +36,42 @@ definitions:
         type: integer
       valid:
         type: boolean
+    type: object
+  model.PersonalDataLogic:
+    properties:
+      full_name:
+        example: Иванов Иван Иванович
+        type: string
+      geographic:
+        properties:
+          city:
+            example: Москва
+            type: string
+          country:
+            example: Российская Федерация
+            type: string
+        type: object
+      position:
+        example: Старший менеджер по инвестициям
+        type: string
+    required:
+    - full_name
+    type: object
+  model.RegistrationDataLogic:
+    properties:
+      email:
+        example: example@mail.ru
+        type: string
+      password:
+        example: 1234qwerty!
+        type: string
+      repeated_password:
+        example: 1234qwerty!
+        type: string
+    required:
+    - email
+    - password
+    - repeated_password
     type: object
   model.SignInRequest:
     properties:
@@ -44,15 +97,14 @@ definitions:
     type: object
   model.SignUpRequest:
     properties:
-      email:
+      auth_data:
+        allOf:
+        - $ref: '#/definitions/model.RegistrationDataLogic'
         description: server.Params
-        type: string
-      first_name:
-        type: string
-      last_name:
-        type: string
-      password:
-        type: string
+      business_data:
+        $ref: '#/definitions/model.BusinessDataLogic'
+      personal_data:
+        $ref: '#/definitions/model.PersonalDataLogic'
     type: object
   model.SignUpResponse:
     properties:

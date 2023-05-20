@@ -1,10 +1,10 @@
 package http
 
 import (
-	authInterface "bank_api/internal/auth/interface"
-	"bank_api/internal/auth/model"
-	"bank_api/pkg/terrors"
-	"bank_api/pkg/thttp/server"
+	authInterface "gb-auth-gate/internal/auth/interface"
+	"gb-auth-gate/internal/auth/model"
+	"gb-auth-gate/pkg/terrors"
+	"gb-auth-gate/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
 )
 

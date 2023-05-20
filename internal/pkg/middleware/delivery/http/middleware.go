@@ -1,11 +1,11 @@
 package http
 
 import (
-	"bank_api/config"
-	"bank_api/internal/pkg/middleware/model"
-	"bank_api/pkg/tlogger"
-	"bank_api/pkg/tutils/etc"
 	"fmt"
+	"gb-auth-gate/config"
+	"gb-auth-gate/internal/pkg/middleware/model"
+	"gb-auth-gate/pkg/tlogger"
+	"gb-auth-gate/pkg/tutils/etc"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/redis/v2"
 	"github.com/sarulabs/di"

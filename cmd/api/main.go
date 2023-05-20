@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bank_api/internal/pkg/server"
 	"fmt"
+	"gb-auth-gate/internal/pkg/server"
 )
 
 // @title Core backend app for Leaders of Digital Transformation

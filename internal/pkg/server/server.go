@@ -1,14 +1,14 @@
 package server
 
 import (
-	"bank_api/config"
-	_ "bank_api/docs"
-	"bank_api/internal/pkg/dependency"
-	"bank_api/pkg/terrors"
-	"bank_api/pkg/thttp"
-	"bank_api/pkg/thttp/server"
-	"bank_api/pkg/tlogger"
 	"fmt"
+	"gb-auth-gate/config"
+	_ "gb-auth-gate/docs"
+	"gb-auth-gate/internal/pkg/dependency"
+	"gb-auth-gate/pkg/terrors"
+	"gb-auth-gate/pkg/thttp"
+	"gb-auth-gate/pkg/thttp/server"
+	"gb-auth-gate/pkg/tlogger"
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	mwLogger "github.com/gofiber/fiber/v2/middleware/logger"

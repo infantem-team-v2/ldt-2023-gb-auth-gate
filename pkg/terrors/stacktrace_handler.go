@@ -1,7 +1,7 @@
 package terrors
 
 import (
-	"bank_api/pkg/tlogger"
+	"gb-auth-gate/pkg/tlogger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
 )

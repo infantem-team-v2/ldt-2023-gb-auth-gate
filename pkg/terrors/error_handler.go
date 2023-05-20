@@ -1,9 +1,9 @@
 package terrors
 
 import (
-	"bank_api/internal/pkg/common"
-	"bank_api/pkg/thttp"
-	"bank_api/pkg/tlogger"
+	"gb-auth-gate/internal/pkg/common"
+	"gb-auth-gate/pkg/thttp"
+	"gb-auth-gate/pkg/tlogger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
 	"strings"

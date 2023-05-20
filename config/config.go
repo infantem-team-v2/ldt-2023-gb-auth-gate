@@ -1,14 +1,14 @@
 package config
 
 import (
-	mdwModel "bank_api/internal/pkg/middleware/model"
-	"bank_api/pkg/damqp/config"
-	"bank_api/pkg/tconfig"
-	thttpConfig "bank_api/pkg/thttp/config"
-	tloggerConfig "bank_api/pkg/tlogger/config"
-	tsecureConfig "bank_api/pkg/tsecure/config"
-	tstorageConfig "bank_api/pkg/tstorage/config"
 	"fmt"
+	mdwModel "gb-auth-gate/internal/pkg/middleware/model"
+	"gb-auth-gate/pkg/damqp/config"
+	"gb-auth-gate/pkg/tconfig"
+	thttpConfig "gb-auth-gate/pkg/thttp/config"
+	tloggerConfig "gb-auth-gate/pkg/tlogger/config"
+	tsecureConfig "gb-auth-gate/pkg/tsecure/config"
+	tstorageConfig "gb-auth-gate/pkg/tstorage/config"
 	"github.com/sarulabs/di"
 	"github.com/spf13/viper"
 	"log"

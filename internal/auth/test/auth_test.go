@@ -1,14 +1,14 @@
 package test
 
 import (
-	_ "bank_api/internal/auth/interface"
-	"bank_api/internal/auth/model"
-	_ "bank_api/internal/auth/usecase"
-	"bank_api/internal/pkg/common"
-	"bank_api/internal/pkg/server"
-	"bank_api/pkg/thttp"
 	"bytes"
 	"encoding/json"
+	_ "gb-auth-gate/internal/auth/interface"
+	"gb-auth-gate/internal/auth/model"
+	_ "gb-auth-gate/internal/auth/usecase"
+	"gb-auth-gate/internal/pkg/common"
+	"gb-auth-gate/internal/pkg/server"
+	"gb-auth-gate/pkg/thttp"
 	"github.com/stretchr/testify/assert"
 	netHttp "net/http"
 	"testing"
@@ -17,42 +17,27 @@ import (
 // ======================SIGN_UP========================//
 func TestSignUp(t *testing.T) {
 	tests := map[string]model.SignUpRequest{
-		"test1": {
-			Email:     "test@test.com",
-			FirstName: "Test",
-			LastName:  "Testov",
-			Password:  "password",
-		},
-		"test2": {
-			Email:     "aga@da.verno",
-			FirstName: "Lovi",
-			LastName:  "Oshibku",
-			Password:  "shutka",
-		},
-		"test3": {
-			Email:     "net.chto.eto",
-			FirstName: "123123",
-			LastName:  "ls23e",
-			Password:  "",
-		}}
+		"test1": {},
+		"test2": {},
+		"test3": {}}
 
 	expected := map[string]model.SignUpResponse{
 		"test1": {
 			Response: common.Response{
-				Message:    "Created",
-				StatusCode: 201,
+				Message:      "Created",
+				InternalCode: 201,
 			},
 		},
 		"test2": {
 			Response: common.Response{
-				Message:    "User already exists!",
-				StatusCode: 409,
+				Message:      "User already exists!",
+				InternalCode: 409,
 			},
 		},
 		"test3": {
 			Response: common.Response{
-				Message:    "Unauthorized Error",
-				StatusCode: 401,
+				Message:      "Unauthorized Error",
+				InternalCode: 401,
 			},
 		},
 	}
@@ -65,7 +50,7 @@ func TestSignUp(t *testing.T) {
 			t.Fatal(err)
 		}
 		resp, err := serverTest.App.Test(req, -1)
-		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
+		assert.Equal(t, expected[i].InternalCode, resp.StatusCode)
 	}
 }
 
@@ -88,20 +73,20 @@ func TestSignIn(t *testing.T) {
 	expected := map[string]model.SignInResponse{
 		"test1": {
 			Response: common.Response{
-				Message:    "Success",
-				StatusCode: 200,
+				Message:      "Success",
+				InternalCode: 200,
 			},
 		},
 		"test2": {
 			Response: common.Response{
-				Message:    "Not found!",
-				StatusCode: 404,
+				Message:      "Not found!",
+				InternalCode: 404,
 			},
 		},
 		"test3": {
 			Response: common.Response{
-				Message:    "Unauthorized Error",
-				StatusCode: 401,
+				Message:      "Unauthorized Error",
+				InternalCode: 401,
 			},
 		},
 	}
@@ -114,7 +99,7 @@ func TestSignIn(t *testing.T) {
 			t.Fatal(err)
 		}
 		resp, err := serverTest.App.Test(req, -1)
-		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
+		assert.Equal(t, expected[i].InternalCode, resp.StatusCode)
 	}
 }
 
@@ -134,20 +119,20 @@ func TestValidateEmail(t *testing.T) {
 	expected := map[string]model.EmailValidateResponse{
 		"test1": {
 			Response: common.Response{
-				Message:    "Accepted",
-				StatusCode: 202,
+				Message:      "Accepted",
+				InternalCode: 202,
 			},
 		},
 		"test2": {
 			Response: common.Response{
-				Message:    "Request validation failed",
-				StatusCode: 400,
+				Message:      "Request validation failed",
+				InternalCode: 400,
 			},
 		},
 		"test3": {
 			Response: common.Response{
-				Message:    "Request validation failed",
-				StatusCode: 400,
+				Message:      "Request validation failed",
+				InternalCode: 400,
 			},
 		},
 	}
@@ -160,6 +145,6 @@ func TestValidateEmail(t *testing.T) {
 			t.Fatal(err)
 		}
 		resp, err := serverTest.App.Test(req, -1)
-		assert.Equal(t, expected[i].StatusCode, resp.StatusCode)
+		assert.Equal(t, expected[i].InternalCode, resp.StatusCode)
 	}
 }

@@ -1,9 +1,9 @@
 package relational
 
 import (
-	"bank_api/config"
-	sConfig "bank_api/pkg/tstorage/config"
 	"fmt"
+	"gb-auth-gate/config"
+	sConfig "gb-auth-gate/pkg/tstorage/config"
 	_ "github.com/jackc/pgx/stdlib" // pgx driver
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"

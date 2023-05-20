@@ -1,6 +1,6 @@
 package authInterface
 
-import "bank_api/internal/auth/model"
+import "gb-auth-gate/internal/auth/model"
 
 type UseCase interface {
 	SignUp(params *model.SignUpRequest) (*model.SignUpResponse, error)

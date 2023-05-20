@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"bank_api/internal/auth/model"
-	"bank_api/internal/pkg/common"
-	"bank_api/pkg/tlogger"
+	"gb-auth-gate/internal/auth/model"
+	"gb-auth-gate/internal/pkg/common"
+	tlogger "gb-auth-gate/pkg/tlogger"
 	"github.com/sarulabs/di"
 	"math/rand"
 	"time"

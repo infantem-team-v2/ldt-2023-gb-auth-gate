@@ -1,11 +1,11 @@
 package thttp
 
 import (
-	"bank_api/config"
-	"bank_api/pkg/tlogger"
-	"bank_api/pkg/tutils/etc"
 	"encoding/json"
 	"fmt"
+	"gb-auth-gate/config"
+	"gb-auth-gate/pkg/tlogger"
+	"gb-auth-gate/pkg/tutils/etc"
 	"github.com/sarulabs/di"
 	http "github.com/valyala/fasthttp"
 	"time"

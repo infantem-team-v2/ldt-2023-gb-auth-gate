@@ -1,8 +1,8 @@
 package server
 
 import (
-	"bank_api/config"
-	"bank_api/pkg/terrors"
+	"gb-auth-gate/config"
+	"gb-auth-gate/pkg/terrors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
 	"time"

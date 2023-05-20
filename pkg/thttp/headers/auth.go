@@ -1,9 +1,9 @@
 package thttpHeaders
 
 import (
-	"bank_api/pkg/thttp"
-	"bank_api/pkg/tsecure"
 	"encoding/json"
+	"gb-auth-gate/pkg/thttp"
+	"gb-auth-gate/pkg/tsecure"
 	"strconv"
 	"strings"
 	"time"

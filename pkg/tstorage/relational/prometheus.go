@@ -1,7 +1,7 @@
 package relational
 
 import (
-	"bank_api/pkg/tstorage/config"
+	"gb-auth-gate/pkg/tstorage/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/collectors"
 )

@@ -190,6 +190,30 @@
                 }
             }
         },
+        "model.BusinessDataLogic": {
+            "type": "object",
+            "required": [
+                "inn"
+            ],
+            "properties": {
+                "economic_activity": {
+                    "type": "string",
+                    "example": "Производство"
+                },
+                "inn": {
+                    "type": "string",
+                    "example": "7707083893"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "ООО ИНФАНТЕМ"
+                },
+                "website": {
+                    "type": "string",
+                    "example": "infantem.tech"
+                }
+            }
+        },
         "model.EmailValidateRequest": {
             "type": "object",
             "properties": {
@@ -209,6 +233,57 @@
                 },
                 "valid": {
                     "type": "boolean"
+                }
+            }
+        },
+        "model.PersonalDataLogic": {
+            "type": "object",
+            "required": [
+                "full_name"
+            ],
+            "properties": {
+                "full_name": {
+                    "type": "string",
+                    "example": "Иванов Иван Иванович"
+                },
+                "geographic": {
+                    "type": "object",
+                    "properties": {
+                        "city": {
+                            "type": "string",
+                            "example": "Москва"
+                        },
+                        "country": {
+                            "type": "string",
+                            "example": "Российская Федерация"
+                        }
+                    }
+                },
+                "position": {
+                    "type": "string",
+                    "example": "Старший менеджер по инвестициям"
+                }
+            }
+        },
+        "model.RegistrationDataLogic": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "repeated_password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "example@mail.ru"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "1234qwerty!"
+                },
+                "repeated_password": {
+                    "type": "string",
+                    "example": "1234qwerty!"
                 }
             }
         },
@@ -249,18 +324,19 @@
         "model.SignUpRequest": {
             "type": "object",
             "properties": {
-                "email": {
+                "auth_data": {
                     "description": "server.Params",
-                    "type": "string"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.RegistrationDataLogic"
+                        }
+                    ]
                 },
-                "first_name": {
-                    "type": "string"
+                "business_data": {
+                    "$ref": "#/definitions/model.BusinessDataLogic"
                 },
-                "last_name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
+                "personal_data": {
+                    "$ref": "#/definitions/model.PersonalDataLogic"
                 }
             }
         },

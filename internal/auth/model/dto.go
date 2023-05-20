@@ -1,15 +1,14 @@
 package model
 
 import (
-	"bank_api/internal/pkg/common"
+	"gb-auth-gate/internal/pkg/common"
 )
 
 type SignUpRequest struct {
 	//server.Params
-	Email     string `json:"email,required"`
-	Password  string `json:"password,required"`
-	FirstName string `json:"first_name,required"`
-	LastName  string `json:"last_name"`
+	AuthData     RegistrationDataLogic `json:"auth_data"`
+	PersonalData PersonalDataLogic     `json:"personal_data"`
+	BusinessData BusinessDataLogic     `json:"business_data"`
 }
 
 type SignUpResponse struct {

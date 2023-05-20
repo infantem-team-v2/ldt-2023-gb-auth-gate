@@ -1,9 +1,9 @@
 package terrors
 
 import (
-	"bank_api/pkg/terrors/interface"
-	"bank_api/pkg/xruntime"
 	"fmt"
+	"gb-auth-gate/pkg/terrors/interface"
+	"gb-auth-gate/pkg/xruntime"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 	"io"

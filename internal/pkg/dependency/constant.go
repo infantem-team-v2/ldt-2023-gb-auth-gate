@@ -1,22 +1,24 @@
 package dependency
 
 import (
-	"bank_api/config"
-	"bank_api/internal/auth/usecase"
-	mdwHttp "bank_api/internal/pkg/middleware/delivery/http"
-	"bank_api/pkg/damqp/kafka"
-	"bank_api/pkg/damqp/rabbit"
-	"bank_api/pkg/terrors"
-	"bank_api/pkg/thttp"
-	"bank_api/pkg/thttp/server"
-	"bank_api/pkg/tlogger"
-	tstorageRelational "bank_api/pkg/tstorage/relational"
+	"gb-auth-gate/config"
+	"gb-auth-gate/internal/auth/usecase"
+	mdwHttp "gb-auth-gate/internal/pkg/middleware/delivery/http"
+	"gb-auth-gate/pkg/damqp/kafka"
+	"gb-auth-gate/pkg/damqp/rabbit"
+	"gb-auth-gate/pkg/terrors"
+	"gb-auth-gate/pkg/thttp"
+	"gb-auth-gate/pkg/thttp/server"
+	"gb-auth-gate/pkg/tlogger"
+	tstorageCache "gb-auth-gate/pkg/tstorage/cache"
+	tstorageRelational "gb-auth-gate/pkg/tstorage/relational"
 	"github.com/sarulabs/di"
 )
 
 var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"config":            config.BuildConfig,
 	"postgres":          tstorageRelational.BuildPostgres,
+	"redis":             tstorageCache.BuildRedis,
 	"httpClient":        thttp.BuildHttpClient,
 	"logger":            tlogger.BuildLogger,
 	"middleware":        mdwHttp.BuildMiddlewareManager,
