@@ -1,10 +1,10 @@
 package rabbit
 
 import (
-	"bank_api/config"
-	"bank_api/pkg/tlogger"
 	"context"
 	"fmt"
+	"gb-auth-gate/config"
+	"gb-auth-gate/pkg/tlogger"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/sarulabs/di"
 	"os"
