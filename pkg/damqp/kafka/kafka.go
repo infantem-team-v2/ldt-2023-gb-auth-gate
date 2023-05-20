@@ -1,10 +1,10 @@
 package kafka
 
 import (
-	"bank_api/config"
-	"bank_api/pkg/tlogger"
 	"context"
 	"fmt"
+	"gb-auth-gate/config"
+	"gb-auth-gate/pkg/tlogger"
 	"github.com/Shopify/sarama"
 	"github.com/sarulabs/di"
 )

@@ -1,9 +1,9 @@
 package tlogger
 
 import (
-	"bank_api/config"
-	"bank_api/pkg/terrors/interface"
 	"fmt"
+	"gb-auth-gate/config"
+	"gb-auth-gate/pkg/terrors/interface"
 	"github.com/afiskon/promtail-client/promtail"
 	"github.com/sarulabs/di"
 	"github.com/sirupsen/logrus"
