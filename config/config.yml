@@ -5,7 +5,7 @@ BaseConfig:
 
   System:
     host: "0.0.0.0"
-    port: "8082"
+    port: "8000"
     max_goroutines: 15000
 
 HttpConfig:
