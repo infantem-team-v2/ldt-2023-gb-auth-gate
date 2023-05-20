@@ -8,8 +8,8 @@
   message: happened unknown error because of user's actions
   statusCode: 400
 100001:
-  message: a
-  statusCode: 401
+  message: invalid data for body's request
+  statusCode: 400
 
 # 2xxxxx our vendor problem
 200000:

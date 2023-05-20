@@ -30,7 +30,7 @@ func NewAuthHandler(app *fiber.App) server.IHandler {
 }
 
 // VendorAuth godoc
-// @Summary Sign in or sign up via Apple or Google
+// @Summary Sign in or sign up via external vendor
 // @Description Accepts token from vendor which we process and returning pair of tokens
 // @Tags Authorization
 // @Accept json
@@ -46,26 +46,29 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 }
 
 // SignUp godoc
-// @Summary Sign up with email
-// @Description Sign up with email and password
+// @Summary Sign up with base data
+// @Description Sign up with data which was in our task
 // @Tags Authorization
 // @Accept json
 // @Produce json
 // @Param data body model.SignUpRequest true "Authorization data from user"
-// @Success 200 {object} model.SignUpResponse
+// @Success 201 {object} model.SignUpResponse
+// @Failure 400 {object} common.Response
 // @Failure 404 {object} common.Response
 // @Router /auth/sign/up [post]
 func (ah *AuthHandler) SignUp() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var params model.SignUpRequest
-		if err := ctx.BodyParser(&params); err != nil {
-			return err
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
 		}
 		response, err := ah.AuthUC.SignUp(&params)
 		if err != nil {
 			return err
 		}
-		return ctx.JSON(response)
+		return ctx.
+			Status(201).
+			JSON(response)
 	}
 }
 
@@ -82,8 +85,8 @@ func (ah *AuthHandler) SignUp() fiber.Handler {
 func (ah *AuthHandler) SignIn() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var params model.SignInRequest
-		if err := ctx.BodyParser(&params); err != nil {
-			return err
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
 		}
 		response, err := ah.AuthUC.SignIn(&params)
 		if err != nil {
@@ -106,8 +109,8 @@ func (ah *AuthHandler) SignIn() fiber.Handler {
 func (ah *AuthHandler) ValidateEmail() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		var params model.EmailValidateRequest
-		if err := ctx.BodyParser(&params); err != nil {
-			return err
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
 		}
 		response, err := ah.AuthUC.ValidateEmail(&params)
 		if err != nil {
