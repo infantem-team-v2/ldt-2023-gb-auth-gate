@@ -113,7 +113,7 @@ definitions:
       internal_code:
         type: integer
     type: object
-host: core.ldt2023.infantem.tech
+host: gate.gb.ldt2023.infantem.tech
 info:
   contact:
     email: KlenoviySir@yandex.ru
@@ -149,7 +149,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Sign in or sign up via Apple or Google
+      summary: Sign in or sign up via external vendor
       tags:
       - Authorization
   /auth/email/validate:
@@ -209,7 +209,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Sign up with email and password
+      description: Sign up with data which was in our task
       parameters:
       - description: Authorization data from user
         in: body
@@ -220,15 +220,19 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/model.SignUpResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
         "404":
           description: Not Found
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Sign up with email
+      summary: Sign up with base data
       tags:
       - Authorization
 schemes:

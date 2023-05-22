@@ -3,6 +3,7 @@ package http
 import (
 	"fmt"
 	"gb-auth-gate/config"
+	authInterface "gb-auth-gate/internal/auth/interface"
 	"gb-auth-gate/internal/pkg/middleware/model"
 	"gb-auth-gate/pkg/tlogger"
 	"gb-auth-gate/pkg/tutils/etc"
@@ -14,12 +15,15 @@ import (
 
 type MiddlewareManager struct {
 	sessionStorage *session.Store
-	Logger         tlogger.ILogger `di:"logger"`
+	Logger         tlogger.ILogger       `di:"logger"`
+	AuthUC         authInterface.UseCase `di:"authUC"`
 }
 
 func BuildMiddlewareManager(ctn di.Container) (interface{}, error) {
 	cfg := ctn.Get("config").(*config.Config)
 	logger := ctn.Get("logger").(tlogger.ILogger)
+	authUC := ctn.Get("authUC").(authInterface.UseCase)
+
 	s := session.New(session.Config{
 		CookieHTTPOnly: true,
 		Storage: redis.New(redis.Config{
@@ -38,5 +42,6 @@ func BuildMiddlewareManager(ctn di.Container) (interface{}, error) {
 	return &MiddlewareManager{
 		sessionStorage: s,
 		Logger:         logger,
+		AuthUC:         authUC,
 	}, nil
 }

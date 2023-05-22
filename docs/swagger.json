@@ -13,7 +13,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "core.ldt2023.infantem.tech",
+    "host": "gate.gb.ldt2023.infantem.tech",
     "paths": {
         "/auth": {
             "post": {
@@ -27,7 +27,7 @@
                 "tags": [
                     "Authorization"
                 ],
-                "summary": "Sign in or sign up via Apple or Google",
+                "summary": "Sign in or sign up via external vendor",
                 "parameters": [
                     {
                         "enum": [
@@ -139,7 +139,7 @@
         },
         "/auth/sign/up": {
             "post": {
-                "description": "Sign up with email and password",
+                "description": "Sign up with data which was in our task",
                 "consumes": [
                     "application/json"
                 ],
@@ -149,7 +149,7 @@
                 "tags": [
                     "Authorization"
                 ],
-                "summary": "Sign up with email",
+                "summary": "Sign up with base data",
                 "parameters": [
                     {
                         "description": "Authorization data from user",
@@ -162,10 +162,16 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.SignUpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
                         }
                     },
                     "404": {

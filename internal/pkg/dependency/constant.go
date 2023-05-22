@@ -2,7 +2,8 @@ package dependency
 
 import (
 	"gb-auth-gate/config"
-	"gb-auth-gate/internal/auth/usecase"
+	authRepo "gb-auth-gate/internal/auth/repository"
+	authUC "gb-auth-gate/internal/auth/usecase"
 	mdwHttp "gb-auth-gate/internal/pkg/middleware/delivery/http"
 	"gb-auth-gate/pkg/damqp/kafka"
 	"gb-auth-gate/pkg/damqp/rabbit"
@@ -16,18 +17,26 @@ import (
 )
 
 var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
-	"config":            config.BuildConfig,
-	"postgres":          tstorageRelational.BuildPostgres,
-	"redis":             tstorageCache.BuildRedis,
-	"httpClient":        thttp.BuildHttpClient,
-	"logger":            tlogger.BuildLogger,
+	"config": config.BuildConfig,
+
+	"postgres": tstorageRelational.BuildPostgres,
+	"redis":    tstorageCache.BuildRedis,
+
+	"httpClient": thttp.BuildHttpClient,
+
+	"logger": tlogger.BuildLogger,
+
+	"rabbit": rabbit.BuildRabbitMQ,
+	"kafka":  kafka.BuildKafka,
+
 	"middleware":        mdwHttp.BuildMiddlewareManager,
 	"errorHandler":      terrors.BuildErrorHandler,
 	"stacktraceHandler": terrors.BuildStacktraceHandler,
-	"app":               server.BuildFiberApp,
-	"authUC":            usecase.BuildAuthUsecase,
-	"rabbit":            rabbit.BuildRabbitMQ,
-	"kafka":             kafka.BuildKafka,
+
+	"app": server.BuildFiberApp,
+
+	"authUC":   authUC.BuildAuthUsecase,
+	"authRepo": authRepo.BuildPostgresRepository,
 }
 
 const TagDI = "di"

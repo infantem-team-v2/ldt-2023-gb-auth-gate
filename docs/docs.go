@@ -32,7 +32,7 @@ const docTemplate = `{
                 "tags": [
                     "Authorization"
                 ],
-                "summary": "Sign in or sign up via Apple or Google",
+                "summary": "Sign in or sign up via external vendor",
                 "parameters": [
                     {
                         "enum": [
@@ -144,7 +144,7 @@ const docTemplate = `{
         },
         "/auth/sign/up": {
             "post": {
-                "description": "Sign up with email and password",
+                "description": "Sign up with data which was in our task",
                 "consumes": [
                     "application/json"
                 ],
@@ -154,7 +154,7 @@ const docTemplate = `{
                 "tags": [
                     "Authorization"
                 ],
-                "summary": "Sign up with email",
+                "summary": "Sign up with base data",
                 "parameters": [
                     {
                         "description": "Authorization data from user",
@@ -167,10 +167,16 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.SignUpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
                         }
                     },
                     "404": {
@@ -362,7 +368,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
-	Host:             "core.ldt2023.infantem.tech",
+	Host:             "gate.gb.ldt2023.infantem.tech",
 	BasePath:         "",
 	Schemes:          []string{"https"},
 	Title:            "Core backend app for Leaders of Digital Transformation",

@@ -10,12 +10,23 @@
 100001:
   message: invalid data for body's request
   statusCode: 400
+100002:
+  message: can't validate your request. maybe you're not authorized
+  statusCode: 401
+100003:
+  message: invalid signature for request. please, check your credentials
 
 # 2xxxxx our vendor problem
 200000:
   message: unknown error on external api's side
   statusCode: 409
+200002:
+  message: can't authorize to external api. please contact support
+  statusCode: 409
 # 3xxxxx our internal problem
 300000:
   message: unknown error inside system
   statusCode: 500
+300001:
+  message: something went wrong while signature was been checking
+  statusCode: 401

@@ -1,7 +1,7 @@
 BaseConfig:
   Service:
-    url: "bank.onecrypto.pro"
-    name: "bank-onecrypto"
+    url: "gate.gb.ldt2023.infantem.tech"
+    name: "gb-auth-gate"
 
   System:
     host: "0.0.0.0"

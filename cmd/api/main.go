@@ -12,7 +12,7 @@ import (
 // @contact.url https://t.me/KlenoviySirop
 // @contact.email KlenoviySir@yandex.ru
 
-// @host core.ldt2023.infantem.tech
+// @host gate.gb.ldt2023.infantem.tech
 // @schemes https
 
 // @securityDefinitions AuthJWT

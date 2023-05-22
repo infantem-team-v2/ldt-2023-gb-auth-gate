@@ -21,3 +21,9 @@ type BusinessDataLogic struct {
 	INN              string `json:"inn" validate:"required" example:"7707083893"`
 	EconomicActivity string `json:"economic_activity" example:"Производство"`
 }
+
+type AuthHeadersLogic struct {
+	PublicKey string `json:"public_key"`
+	Signature string `json:"signature"`
+	Body      []byte `json:"body"`
+}
