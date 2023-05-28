@@ -42,7 +42,7 @@ func (cu *CalculationsUseCase) sendRequestToAPI(uri, method string, params, resp
 		&response,
 		queryParams,
 	)
-	fmt.Printf("\n$s\n", rawResponse)
+	fmt.Printf("\n%s\n", rawResponse)
 	if err != nil {
 		return nil, 0, terrors.Raise(err, 200005)
 	}
