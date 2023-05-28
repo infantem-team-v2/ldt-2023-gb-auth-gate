@@ -70,6 +70,6 @@ type CalcResponseLogic struct {
 }
 
 type PieChartLogic struct {
-	Labels   []string         `json:"labels"`
-	Datasets []map[string]int `json:"datasets"`
+	Labels   []string           `json:"labels"`
+	Datasets []map[string]int64 `json:"datasets"`
 }

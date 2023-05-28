@@ -50,7 +50,7 @@ type BaseCalculateResponse struct {
 	Input struct {
 		ProjectName       *string  `json:"project_name,omitempty" rus:"Название_компании"`
 		OrganizationType  *string  `json:"organization_type,omitempty" rus:"Тип_организации"`
-		WorkersQuantity   *int     `json:"workers_quantity,omitempty" rus:"Колиество_сотрудников"`
+		WorkersQuantity   *int     `json:"workers_quantity,omitempty" rus:"Количество_сотрудников"`
 		Industry          *string  `json:"industry,omitempty" rus:"Отрасль_производства"`
 		County            *string  `json:"county,omitempty" rus:"Административный_округ"`
 		LandArea          *int     `json:"land_area,omitempty" rus:"Площадь_участка"`
