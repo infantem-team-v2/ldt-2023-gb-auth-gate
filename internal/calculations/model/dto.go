@@ -84,7 +84,7 @@ type GetPlotsResponse struct {
 	ExpensesDistribution PieChartLogic `json:"expenses_distribution"`
 	TaxesDistribution    PieChartLogic `json:"taxes_distribution"`
 	PopularityChart      struct {
-		Labels   []string           `json:"labels"`
-		Datasets []map[string][]int `json:"datasets"`
+		Labels   []string               `json:"labels"`
+		Datasets []map[string][]float64 `json:"datasets"`
 	} `json:"popularity_chart"`
 }
